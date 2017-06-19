@@ -4,10 +4,9 @@ Terraform Best Practices for AWS users.
 
 * [Run terraform command with var-file](#run-terraform-command-with-var-file)
 * [Retrieves state meta data from a remote backend](#retrieves-state-meta-data-from-a-remote-backend)
-* [Retrieves the vpc_id and subnet_ids directly from remote backend state files.](#retrieves-the-vpc_id-and-subnet_ids-directly-from-remote-backend-state-files.)
 * [Use share modules](#use-share-modules)
 * [Isolate environment](#isolate-environment)
-* [Use `terraform import` to include as more resources you can.](#use-`terraform-import`-to-include-as-more-resources-you-can.)
+* [Use terraform import to include as more resources you can.](#use-terraform-import-to-include-as-more-resources-you-can.)
 * [Avoid hard code the resources.](#avoid-hard-code-the-resources.)
 * [Format terraform codes.](#format-terraform-codes.)
 * [Enable version control on terraform state files bucket](#enable-version-control-on-terraform-state-files-bucket)
@@ -64,7 +63,7 @@ Manage terraform resource with shared modules, this will save a lot of coding ti
 Someone create a security group and share it to all non-prod (dev/qa) environments. Don't do that, create resources with different environment name for each environment.
 
 
-## Use `terraform import` to include as more resources you can.
+## Use terraform import to include as more resources you can.
 
 Sometimes developers created some resources directly to rush. You need to mark these resource and use terraform import to include them in codes. 
 
