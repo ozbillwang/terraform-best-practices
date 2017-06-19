@@ -7,10 +7,10 @@ Terraform Best Practices for AWS users.
 * [Use share modules](#use-share-modules)
 * [Isolate environment](#isolate-environment)
 * [Use terraform import to include as more resources you can.](#use-terraform-import-to-include-as-more-resources-you-can.)
-* [Avoid hard code the resources.](#avoid-hard-code-the-resources.)
-* [Format terraform codes.](#format-terraform-codes.)
+* [Avoid hard code the resources](#avoid-hard-code-the-resources)
+* [Format terraform codes](#format-terraform-codes)
 * [Enable version control on terraform state files bucket](#enable-version-control-on-terraform-state-files-bucket)
-* [Generate README.md for each module about input and output variables](#generate-readme.md-for-each-module-about-input-and-output-variables)
+* [Generate README for each module about input and output variables](#generate-readme-for-each-module-about-input-and-output-variables)
 * [update terraform version](#update-terraform-version)
 * [Run terraform from docker container](#run-terraform-from-docker-container)
 
@@ -67,7 +67,7 @@ Someone create a security group and share it to all non-prod (dev/qa) environmen
 
 Sometimes developers created some resources directly to rush. You need to mark these resource and use terraform import to include them in codes. 
 
-## Avoid hard code the resources.
+## Avoid hard code the resources
 
 A sample:
 ```
@@ -87,7 +87,7 @@ data "aws_iam_account_alias" "current" {}
 
 Refer: [terraform data sources](https://www.terraform.io/docs/providers/aws/)
 
-## Format terraform codes.
+## Format terraform codes
 
 Always run `terraform fmt` to format terraform configuration files and make them neatly.
 
@@ -97,7 +97,7 @@ Always set backend to s3 and enable version control on this bucket.
 
 If you'd like to manage this bucket as well, recommend to use this repostory [terraform-state-bucket](https://github.com/BWITS/terraform-state-bucket) to create the bucket and replica to other regions automatically. 
 
-## Generate README.md for each module about input and output variables
+## Generate README for each module about input and output variables
 
 Show the command running on mac:
 ```
