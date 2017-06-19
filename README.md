@@ -95,3 +95,23 @@ $ terraform-docs md . > README.md
 ```
 
 For details on how to run terraform-docs, check this repository: https://github.com/segmentio/terraform-docs
+
+## update terraform version
+
+Hashicorp doesn't have a good qa/build/release process for their software and does not follow semantic versioning rules.
+
+For example, `terraform init` isn't compatible between 0.9 and 0.8. Now they are going to split providers and use "init" to install providers as plugin in coming version 0.10
+
+So recommend to keep updating to latest terraform version
+
+## Run terraform from docker container
+
+Terraform releases official docker containers that you can easly control which version you can run.
+
+Recommend to run terraform docker container, when you set your build job in CI/CD pipeline.
+
+```
+TERRAFORM_IMAGE=hashicorp/terraform:0.9.8
+TERRAFORM_CMD="docker run -ti --rm -w /app -v ${HOME}/.aws:/root/.aws -v ${HOME}/.ssh:/root/.ssh -v `pwd`:/app $TERRAFORM_IMAGE"
+```
+
