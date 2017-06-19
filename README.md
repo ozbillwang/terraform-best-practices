@@ -77,7 +77,7 @@ Refer: [terraform data sources](https://www.terraform.io/docs/providers/aws/)
 
 ## Format terraform codes.
 
-Always run `terraform fmt` to format terraform configuration files to make them neatly.
+Always run `terraform fmt` to format terraform configuration files and make them neatly.
 
 ## Enable version control on terraform state files bucket
 
