@@ -2,7 +2,6 @@
 
 Terraform Best Practices for AWS users.
 
-* [terraform-best-practices](#terraform-best-practices)
 * [Run terraform command with `var-file`](#run-terraform-command-with-`var-file`)
 * [Retrieves state meta data from a remote backend](#retrieves-state-meta-data-from-a-remote-backend)
 * [Retrieves the vpc_id and subnet_ids directly from remote backend state files.](#retrieves-the-vpc_id-and-subnet_ids-directly-from-remote-backend-state-files.)
@@ -10,9 +9,6 @@ Terraform Best Practices for AWS users.
 * [Isolate environment](#isolate-environment)
 * [Use `terraform import` to include as more resources you can.](#use-`terraform-import`-to-include-as-more-resources-you-can.)
 * [Avoid hard code the resources.](#avoid-hard-code-the-resources.)
-* [The attribute `${data.aws_caller_identity.current.account_id}` will be current account number.](#the-attribute-`${data.aws_caller_identity.current.account_id}`-will-be-current-account-number.)
-* [The attribue `${data.aws_iam_account_alias.current.account_alias}` will be current account alias](#the-attribue-`${data.aws_iam_account_alias.current.account_alias}`-will-be-current-account-alias)
-* [Tips: you can easly use this attribue to create terraform bucket with environment, project name, etc.](#tips:-you-can-easly-use-this-attribue-to-create-terraform-bucket-with-environment,-project-name,-etc.)
 * [Format terraform codes.](#format-terraform-codes.)
 * [Enable version control on terraform state files bucket](#enable-version-control-on-terraform-state-files-bucket)
 * [Generate README.md for each module about input and output variables](#generate-readme.md-for-each-module-about-input-and-output-variables)
