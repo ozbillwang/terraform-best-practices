@@ -2,7 +2,7 @@
 
 Terraform Best Practices for AWS users.
 
-* [Run terraform command with `var-file`](#run-terraform-command-with-`var-file`)
+* [Run terraform command with var-file](#run-terraform-command-with-var-file)
 * [Retrieves state meta data from a remote backend](#retrieves-state-meta-data-from-a-remote-backend)
 * [Retrieves the vpc_id and subnet_ids directly from remote backend state files.](#retrieves-the-vpc_id-and-subnet_ids-directly-from-remote-backend-state-files.)
 * [Use share modules](#use-share-modules)
@@ -15,7 +15,7 @@ Terraform Best Practices for AWS users.
 * [update terraform version](#update-terraform-version)
 * [Run terraform from docker container](#run-terraform-from-docker-container)
 
-## Run terraform command with `var-file`
+## Run terraform command with var-file
 
 ```
 $ cat config/dev.tfvars
