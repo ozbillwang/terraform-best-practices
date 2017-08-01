@@ -54,6 +54,10 @@ resource "aws_xx_xxxx" "main" {
 
 Manage terraform resource with shared modules, this will save a lot of coding time. 
 
+### NOTES:
+
+terraform modules don't support `count` parameter currently. You can follow up this ticket for updates: https://github.com/hashicorp/terraform/issues/953
+
 [terraform module usage](https://www.terraform.io/docs/modules/usage.html)
 
 [Terraform community modules](https://github.com/terraform-community-modules)
