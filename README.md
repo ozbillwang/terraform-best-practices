@@ -14,6 +14,7 @@ Terraform Best Practices for AWS users.
 * [update terraform version](#update-terraform-version)
 * [Run terraform from docker container](#run-terraform-from-docker-container)
 * [Troubleshooting with messy output](#troubleshooting-with-messy-output)
+* [some updates for terraform 0.10.x](#some-updates-for-terraform-0.10.x)
 
 ## Run terraform command with var-file
 
@@ -145,3 +146,28 @@ TERRAFORM_CMD="docker run -ti --rm -w /app -v ${HOME}/.aws:/root/.aws -v ${HOME}
 Sometime, you applied the change, the output always prompts there are some changes, essepecially in iam policy.  It is hard to troubleshooting the problem with messy json output in one line.
 
 With the tool [terraform-landscape](https://github.com/coinbase/terraform-landscape), it improves Terraform plan output to be easier to read and understand, you can easily find out where is the problem. For details, please go through the project at https://github.com/coinbase/terraform-landscape
+
+## some updates for terraform 0.10.x
+
+After Hashicorp splits terraform providers out of terraform core binary from v0.10.x, you will see errors to complain aws, template, terraform provider version are not installed when run `terraform init`
+
+```
+* provider.aws: no suitable version installed
+  version requirements: "~> 0.1"
+```
+Please add below codes to `main.tf`
+
+```
+provider "aws" {
+  version = "~> 0.1"
+  region  = "${var.region}"
+}
+
+provider "template" {
+  version = "~> 0.1"
+}
+
+provider "terraform" {
+  version = "~> 0.1"
+}
+```
