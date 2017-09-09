@@ -79,7 +79,7 @@ A sample:
 account_number=“123456789012"
 ```
 
-The aws account id or account alias can be input directly via data sources.
+The current aws account id or account alias can be input directly via data sources.
 
 ```
 # The attribute `${data.aws_caller_identity.current.account_id}` will be current account number. 
