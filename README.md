@@ -95,22 +95,30 @@ Refer: [terraform data sources](https://www.terraform.io/docs/providers/aws/)
 
 Always run `terraform fmt` to format terraform configuration files and make them neatly.
 
+I used below codes in Travis CI pipeline (you can re-use it in any pipelines) to validate and format check the codes before you can merge it to master branch.
+
+      - find . -type f -name "*.tf" -exec dirname {} \;|sort -u | while read m; do (terraform validate -check-variables=false "$m" && echo "√ $m") || exit 1 ; done
+      - if [ `terraform fmt | wc -c` -ne 0 ]; then echo "Some terraform files need be formatted, run 'terraform fmt' to fix"; exit 1; fi
+      
+
 ## Enable version control on terraform state files bucket
 
 Always set backend to s3 and enable version control on this bucket. 
 
-If you'd like to manage this bucket as well, recommend to use this repostory [terraform-state-bucket](https://github.com/BWITS/terraform-state-bucket) to create the bucket and replica to other regions automatically. 
+If you'd like to manage terraform state bucket as well, recommend to use this repostory I wrote [terraform-state-bucket](https://github.com/BWITS/terraform-state-bucket) to create the bucket and replica to other regions automatically. 
 
 ## Generate README for each module about input and output variables
 
-Show the command running on mac:
+You needn't manually manage `USAGE` about input variables and outputs. `terraform-docs` can do this job automatically.
+
+Show the command running on mac before you checkin your codes.
 ```
 $ brew install terraform-docs
 $ cd terraform/modules/vpc
 $ terraform-docs md . > README.md
 ```
 
-For details on how to run terraform-docs, check this repository: https://github.com/segmentio/terraform-docs
+For details on how to run `terraform-docs`, check this repository: https://github.com/segmentio/terraform-docs
 
 ## update terraform version
 
@@ -131,3 +139,8 @@ TERRAFORM_IMAGE=hashicorp/terraform:0.9.8
 TERRAFORM_CMD="docker run -ti --rm -w /app -v ${HOME}/.aws:/root/.aws -v ${HOME}/.ssh:/root/.ssh -v `pwd`:/app $TERRAFORM_IMAGE"
 ```
 
+## Troubleshooting with messy output
+
+Sometime, you applied the change, the output always prompts there are some changes, essepecially in iam policy.  It is hard to troubleshooting the problem with messy json output in one line.
+
+With the tool [terraform-landscape](https://github.com/coinbase/terraform-landscape), you can easily find out where is the problem. For details, please go through the project at https://github.com/coinbase/terraform-landscape
