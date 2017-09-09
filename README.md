@@ -15,6 +15,7 @@ Terraform Best Practices for AWS users.
 * [Run terraform from docker container](#run-terraform-from-docker-container)
 * [Troubleshooting with messy output](#troubleshooting-with-messy-output)
 * [some updates for terraform 0.10.x](#some-updates-for-terraform-0.10.x)
+* [Useful documents you should read](#useful-documents-you-should-read)
 
 ## Run terraform command with var-file
 
@@ -171,3 +172,7 @@ provider "terraform" {
   version = "~> 0.1"
 }
 ```
+
+## Useful documents you should read
+
+[terraform tips & tricks: loops, if-statements, and gotchas](://blog.gruntwork.io/terraform-tips-tricks-loops-if-statements-and-gotchas-f739bbae55f9)
