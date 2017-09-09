@@ -80,7 +80,7 @@ A sample:
 account_number=“123456789012"
 ```
 
-The aws account id or account alias can be input directly via data sources.
+The current aws account id or account alias can be input directly via data sources.
 
 ```
 # The attribute `${data.aws_caller_identity.current.account_id}` will be current account number. 
@@ -143,7 +143,7 @@ TERRAFORM_CMD="docker run -ti --rm -w /app -v ${HOME}/.aws:/root/.aws -v ${HOME}
 
 ## Troubleshooting with messy output
 
-Sometime, you applied the change, the output always prompts there are some changes, essepecially in iam policy.  It is hard to troubleshooting the problem with messy json output in one line.
+Sometime, you applied the changes several times, the plan output always prompts there are some changes, essepecially in iam policy.  It is hard to troubleshooting the problem with messy json output in one line.
 
 With the tool [terraform-landscape](https://github.com/coinbase/terraform-landscape), it improves Terraform plan output to be easier to read and understand, you can easily find out where is the problem. For details, please go through the project at https://github.com/coinbase/terraform-landscape
 
