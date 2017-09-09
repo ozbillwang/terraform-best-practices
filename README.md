@@ -13,6 +13,7 @@ Terraform Best Practices for AWS users.
 * [Generate README for each module about input and output variables](#generate-readme-for-each-module-about-input-and-output-variables)
 * [update terraform version](#update-terraform-version)
 * [Run terraform from docker container](#run-terraform-from-docker-container)
+* [Troubleshooting with messy output](#troubleshooting-with-messy-output)
 
 ## Run terraform command with var-file
 
@@ -143,4 +144,4 @@ TERRAFORM_CMD="docker run -ti --rm -w /app -v ${HOME}/.aws:/root/.aws -v ${HOME}
 
 Sometime, you applied the change, the output always prompts there are some changes, essepecially in iam policy.  It is hard to troubleshooting the problem with messy json output in one line.
 
-With the tool [terraform-landscape](https://github.com/coinbase/terraform-landscape), you can easily find out where is the problem. For details, please go through the project at https://github.com/coinbase/terraform-landscape
+With the tool [terraform-landscape](https://github.com/coinbase/terraform-landscape), it improves Terraform plan output to be easier to read and understand, you can easily find out where is the problem. For details, please go through the project at https://github.com/coinbase/terraform-landscape
