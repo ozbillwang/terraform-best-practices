@@ -108,7 +108,7 @@ I used below codes in Travis CI pipeline (you can re-use it in any pipelines) to
 
 Always set backend to s3 and enable version control on this bucket. 
 
-If you'd like to manage terraform state bucket as well, recommend to use this repostory I wrote [terraform-state-bucket](https://github.com/BWITS/terraform-state-bucket) to create the bucket and replica to other regions automatically. 
+If you'd like to manage terraform state bucket as well, recommend to use this repostory I wrote [terraform-state-bucket](https://github.com/BWITS/tf_aws_tfstate_bucket) to create the bucket and replica to other regions automatically. 
 
 ## Generate README for each module about input and output variables
 
