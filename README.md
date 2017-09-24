@@ -30,9 +30,9 @@ tag_team_name = "hello-world"
 $ terraform plan -var-file=config/dev.tfvars
 ```
 
-With `var-file`, you can easily control which environment you will work on and needn't follow with a lot of var key-value pairs ( `-var foo=bar` )
-
 With `var-file`, you can easily manage environment (dev/stag/uat/prod) variables.
+
+With `var-file`, you avoid to run terraform with long list of key-value pairs ( `-var foo=bar` )
 
 ## Manage s3 backend for tfstate files
 
@@ -67,7 +67,7 @@ dynamodb_table = "terraform-lock"
 - key - Set some meanful names for different services and applications, such as vpc.tfstate, application_name.tfstate, etc
 - dynamodb_table - optional when you want to enable [State Locking](https://www.terraform.io/docs/state/locking.html)
 
-After you set `config/backend-dev.conf` and `config/dev.tfvars` properly (for each environment). You can easily run terraform commands as below:
+After you set `config/backend-dev.conf` and `config/dev.tfvars` properly (for each environment). You can easily run terraform as below:
 
 ```
 env=dev
