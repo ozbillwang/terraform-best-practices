@@ -169,6 +169,8 @@ $ terraform-docs md . > README.md
 
 For details on how to run `terraform-docs`, check this repository: https://github.com/segmentio/terraform-docs
 
+There is a simple sample for you to start [tf_aws_acme](https://github.com/BWITS/tf_aws_acme), the README is generatd by `terraform-docs`
+
 ## update terraform version
 
 Hashicorp doesn't have a good qa/build/release process for their software and does not follow semantic versioning rules.
