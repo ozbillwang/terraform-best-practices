@@ -3,6 +3,7 @@
 Terraform Best Practices for AWS users.
 
 * [Run terraform command with var-file](#run-terraform-command-with-var-file)
+* [Manage s3 backend for tfstate files](#manage-s3-backend-for-tfstate-files)
 * [Retrieves state meta data from a remote backend](#retrieves-state-meta-data-from-a-remote-backend)
 * [Use share modules](#use-share-modules)
 * [Isolate environment](#isolate-environment)
@@ -17,7 +18,7 @@ Terraform Best Practices for AWS users.
 * [some updates for terraform 0.10.x](#some-updates-for-terraform-0.10.x)
 * [Useful documents you should read](#useful-documents-you-should-read)
 
-## Run terraform command with var-file
+## Always Run terraform command with var-file
 
 ```
 $ cat config/dev.tfvars
@@ -26,10 +27,55 @@ name = "dev-stack"
 s3_terraform_bucket = "dev-stack-terraform"
 tag_team_name = "hello-world"
  
-$ terraform plan -var-file=config/dev.tfvars 
+$ terraform plan -var-file=config/dev.tfvars
 ```
 
-With `var-file`, you can easly control which environment you will work on and needn't follow with a lot of var key-value pairs ( `-var foo=bar` )
+With `var-file`, you can easily control which environment you will work on and needn't follow with a lot of var key-value pairs ( `-var foo=bar` )
+
+With `var-file`, you can easily manage environment (dev/stag/uat/prod) variables.
+
+## Manage s3 backend for tfstate files
+
+Terraform doesn't support [Interpolate variables in terraform backend config] (https://github.com/hashicorp/terraform/pull/12067), normally you write a seperate script to define s3 backend bucket name for different environments, but I recommend to hard code it directly as below
+
+Add below codes in terraform configuration files.
+```
+$ cat main.tf
+
+terraform {
+  required_version = "~> 0.10"
+
+  backend "s3" {
+    encrypt = true
+  }
+}
+```
+
+Define backend variables for particular environment
+```
+$ cat config/backend-dev.conf
+bucket  = "<unique_bucke_name>-terraform-development"
+key     = "development/service-1.tfstate"
+region  = "ap-southeast-2"
+kms_key_id = "alias/terraform"
+dynamodb_table = "terraform-lock"
+```
+
+### Notes:
+
+- bucket - s3 bucket name, has to be globally unique.
+- key - Set some meanful names for different services and applications, such as vpc.tfstate, application_name.tfstate, etc
+- dynamodb_table - optional when you want to enable [State Locking](https://www.terraform.io/docs/state/locking.html)
+
+After you set `config/backend-dev.conf` and `config/dev.tfvars` properly (for each environment). You can easily run terraform commands as below:
+
+```
+env=dev
+terraform get -update=true
+terraform init -backend-config=config/backend-${env}.conf
+terraform plan -var-file=config/dev.tfvars
+terraform apply -var-file=config/dev.tfvars
+```
 
 ## Retrieves state meta data from a remote backend
 
