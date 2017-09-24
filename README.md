@@ -36,7 +36,7 @@ With `var-file`, you avoid to run terraform with long list of key-value pairs ( 
 
 ## Manage s3 backend for tfstate files
 
-Terraform doesn't support [Interpolate variables in terraform backend config] (https://github.com/hashicorp/terraform/pull/12067), normally you write a seperate script to define s3 backend bucket name for different environments, but I recommend to hard code it directly as below
+Terraform doesn't support [Interpolate variables in terraform backend config](https://github.com/hashicorp/terraform/pull/12067), normally you write a seperate script to define s3 backend bucket name for different environments, but I recommend to hard code it directly as below
 
 Add below codes in terraform configuration files.
 ```
