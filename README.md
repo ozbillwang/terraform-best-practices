@@ -73,8 +73,8 @@ After you set `config/backend-dev.conf` and `config/dev.tfvars` properly (for ea
 env=dev
 terraform get -update=true
 terraform init -backend-config=config/backend-${env}.conf
-terraform plan -var-file=config/dev.tfvars
-terraform apply -var-file=config/dev.tfvars
+terraform plan -var-file=config/${env}.tfvars
+terraform apply -var-file=config/${env}.tfvars
 ```
 
 ## Retrieves state meta data from a remote backend
