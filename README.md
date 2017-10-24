@@ -79,7 +79,7 @@ terraform apply -var-file=config/${env}.tfvars
 
 ## Retrieves state meta data from a remote backend
 
-Normally we have several layers to manage terraform resources. After you create the base resources, such as vpc, security group, subnets, nat gateway. You should refer the states directly from vpc layer.
+Normally we have several layers to manage terraform resources, such as network, database, application layers. After you create the basic network resources, such as vpc, security group, subnets, nat gateway in vpc stack. Your database layer and applications layer should always refer the resource from vpc layer directly via `terraform_remote_state` data srouce. 
 
 ```
 data "terraform_remote_state" "stack" {
