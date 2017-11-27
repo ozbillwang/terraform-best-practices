@@ -114,18 +114,38 @@ terraform modules don't support `count` parameter currently. You can follow up t
 
 ## Isolate environment
 
-Someone create a security group and share it to all non-prod (dev/qa) environments. Don't do that, create resources with different environment name for each environment.
+Someone create a security group and share it to all non-prod (dev/qa) environments. Don't do that, create resources with different application name for each environment.
 
+```
+variable "application" {
+  description = "application name"
+  default = ""
+}
+
+variable "environment" {
+  description = "environment name"
+  default = ""
+}
+
+resource "<any_resource>" {
+  name = "${var.application}-${var.environment}-<resource_name>"
+  ...
+}
+```
+Wth that, you will easily define the resource with meaningful and unique name. 
 
 ## Use terraform import to include as more resources you can
 
 Sometimes developers created some resources directly to rush. You need to mark these resource and use terraform import to include them in codes. 
+
+[terraform import](https://www.terraform.io/docs/import/usage.html)
 
 ## Avoid hard code the resources
 
 A sample:
 ```
 account_number=“123456789012"
+account_alias="mycompany"
 ```
 
 The current aws account id or account alias can be input directly via data sources.
