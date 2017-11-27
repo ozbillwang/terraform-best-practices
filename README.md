@@ -56,6 +56,7 @@ Define backend variables for particular environment
 $ cat config/backend-dev.conf
 bucket  = "<unique_bucke_name>-terraform-development"
 key     = "development/service-1.tfstate"
+encrypt = true
 region  = "ap-southeast-2"
 kms_key_id = "alias/terraform"
 dynamodb_table = "terraform-lock"
