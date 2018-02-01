@@ -229,16 +229,16 @@ Please add below codes to `main.tf`
 
 ```
 provider "aws" {
-  version = "~> 0.1"
+  version = "~> 1.0"
   region  = "${var.region}"
 }
 
 provider "template" {
-  version = "~> 0.1"
+  version = "~> 1.0"
 }
 
 provider "terraform" {
-  version = "~> 0.1"
+  version = "~> 1.0"
 }
 ```
 
