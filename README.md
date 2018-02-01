@@ -83,11 +83,11 @@ terraform apply -var-file=config/${env}.tfvars
 Normally we have several layers to manage terraform resources, such as network, database, application layers. After you create the basic network resources, such as vpc, security group, subnets, nat gateway in vpc stack. Your database layer and applications layer should always refer the resource from vpc layer directly via `terraform_remote_state` data srouce. 
 
 ```
-data "terraform_remote_state" "stack" {
+data "terraform_remote_state" "vpc" {
   backend = "s3"
   config{
     bucket = "${var.s3_terraform_bucket}"
-    key = "${var.stack_name}/terraform.tfstate"
+    key = "${var.environment}/vpc.tfstate"
     region="${var.aws_region}"
   }
 }
@@ -95,7 +95,7 @@ data "terraform_remote_state" "stack" {
 # Retrieves the vpc_id and subnet_ids directly from remote backend state files.
 resource "aws_xx_xxxx" "main" {
   # ...
-  subnet_ids = "${split(",", data.terraform_remote_state.stack.data_subnets)}"
+  subnet_ids = "${split(",", data.terraform_remote_state.vpc.data_subnets)}"
   vpc_id     = "${data.terraform_remote_state.vpc.vpc_id}"
 }
 ```
@@ -223,7 +223,7 @@ After Hashicorp splits terraform providers out of terraform core binary from v0.
 
 ```
 * provider.aws: no suitable version installed
-  version requirements: "~> 0.1"
+  version requirements: "~> 1.0"
 ```
 Please add below codes to `main.tf`
 
