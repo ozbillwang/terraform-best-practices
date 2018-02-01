@@ -114,7 +114,7 @@ terraform modules don't support `count` parameter currently. You can follow up t
 
 ## Isolate environment
 
-Someone create a security group and share it to all non-prod (dev/qa) environments. Don't do that, create resources with different application name for each environment.
+Sometimes, developers like to create a security group and share it to all non-prod (dev/qa) environments. Don't do that, create resources with different name for each environment.
 
 ```
 variable "application" {
@@ -136,7 +136,7 @@ Wth that, you will easily define the resource with meaningful and unique name.
 
 ## Use terraform import to include as more resources you can
 
-Sometimes developers created some resources directly to rush. You need to mark these resource and use terraform import to include them in codes. 
+Sometimes developers manually created resources directly. You need to mark these resource and use `terraform import` to include them in codes.
 
 [terraform import](https://www.terraform.io/docs/import/usage.html)
 
@@ -160,6 +160,7 @@ data "aws_iam_account_alias" "current" {}
 ```
 
 Refer: [terraform data sources](https://www.terraform.io/docs/providers/aws/)
+
 
 ## Format terraform codes
 
@@ -216,6 +217,10 @@ TERRAFORM_CMD="docker run -ti --rm -w /app -v ${HOME}/.aws:/root/.aws -v ${HOME}
 Sometime, you applied the changes several times, the plan output always prompts there are some changes, essepecially in iam and s3 policy.  It is hard to troubleshooting the problem with messy json output in one line.
 
 With the tool [terraform-landscape](https://github.com/coinbase/terraform-landscape), it improves Terraform plan output to be easier to read and understand, you can easily find out where is the problem. For details, please go through the project at https://github.com/coinbase/terraform-landscape
+
+    terraform plan -var-file=${env}/${env}.tfvars -input=false -out=plan -lock=false |tee report
+    gem install terraform_landscape
+    landscape < report
 
 ## some updates for terraform 0.10.x
 
