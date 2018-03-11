@@ -118,7 +118,7 @@ terraform modules don't support `count` parameter currently. You can follow up t
 
 ## Isolate environment
 
-Sometimes, developers like to create a security group and share it to all non-prod (dev/qa) environments. Don't do that, create resources with different name for each environment.
+Sometimes, developers like to create a security group and share it to all non-prod (dev/qa) environments. Don't do that, create resources with different name for each environment and each resource.
 
 ```
 variable "application" {
@@ -136,7 +136,7 @@ resource "<any_resource>" {
   ...
 }
 ```
-Wth that, you will easily define the resource with meaningful and unique name. 
+Wth that, you will easily define the resource with meaningful and unique name, and you can build more same application stack for different developers without change a lot. For example, you update the environment to dev1, dev2, etc.
 
 ## Use terraform import to include as more resources you can
 
