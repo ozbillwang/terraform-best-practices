@@ -203,7 +203,7 @@ So recommend to keep updating to latest terraform version
 
 ## Run terraform from docker container
 
-Terraform releases official docker containers that you can easly control which version you can run.
+Terraform releases official docker containers that you can easily control which version you can run.
 
 Recommend to run terraform docker container, when you set your build job in CI/CD pipeline.
 
