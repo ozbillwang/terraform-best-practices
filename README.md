@@ -110,7 +110,7 @@ For detail, you can start from below links:
 
 [Terraform Module Registry](https://registry.terraform.io/)
 
-[Terraform community modules](https://github.com/terraform-aws-modules)
+[Terraform aws modules](https://github.com/terraform-aws-modules)
 
 ### NOTES:
 
