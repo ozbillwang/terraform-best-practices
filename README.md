@@ -182,7 +182,6 @@ If you'd like to manage terraform state bucket as well, recommend to use this re
 
 You needn't manually manage `USAGE` about input variables and outputs. [terraform-docs](https://github.com/segmentio/terraform-docs) can do this job automatically.
 
-Show the command running on mac before you checkin your codes.
 ```
 $ brew install terraform-docs
 $ cd terraform/modules/vpc
