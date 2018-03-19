@@ -2,21 +2,29 @@
 
 Terraform Best Practices for AWS users.
 
-* [Run terraform command with var-file](#run-terraform-command-with-var-file)
-* [Manage s3 backend for tfstate files](#manage-s3-backend-for-tfstate-files)
-* [Retrieves state meta data from a remote backend](#retrieves-state-meta-data-from-a-remote-backend)
-* [Use share modules](#use-share-modules)
-* [Isolate environment](#isolate-environment)
-* [Use terraform import to include as more resources you can](#use-terraform-import-to-include-as-more-resources-you-can)
-* [Avoid hard code the resources](#avoid-hard-code-the-resources)
-* [Format terraform codes](#format-terraform-codes)
-* [Enable version control on terraform state files bucket](#enable-version-control-on-terraform-state-files-bucket)
-* [Generate README for each module about input and output variables](#generate-readme-for-each-module-about-input-and-output-variables)
-* [update terraform version](#update-terraform-version)
-* [Run terraform from docker container](#run-terraform-from-docker-container)
-* [Troubleshooting with messy output](#troubleshooting-with-messy-output)
-* [some updates for terraform 0.10.x](#some-updates-for-terraform-0.10.x)
-* [Useful documents you should read](#useful-documents-you-should-read)
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Always Run terraform command with var-file](#always-run-terraform-command-with-var-file)
+- [Manage s3 backend for tfstate files](#manage-s3-backend-for-tfstate-files)
+  - [Notes:](#notes)
+- [Retrieves state meta data from a remote backend](#retrieves-state-meta-data-from-a-remote-backend)
+- [Use share modules](#use-share-modules)
+  - [NOTES:](#notes)
+- [Isolate environment](#isolate-environment)
+- [Use terraform import to include as more resources you can](#use-terraform-import-to-include-as-more-resources-you-can)
+- [Avoid hard code the resources](#avoid-hard-code-the-resources)
+- [Format terraform codes](#format-terraform-codes)
+- [Enable version control on terraform state files bucket](#enable-version-control-on-terraform-state-files-bucket)
+- [Generate README for each module about input and output variables](#generate-readme-for-each-module-about-input-and-output-variables)
+- [update terraform version](#update-terraform-version)
+- [Run terraform from docker container](#run-terraform-from-docker-container)
+- [Troubleshooting with messy output](#troubleshooting-with-messy-output)
+- [some updates for terraform 0.10.x](#some-updates-for-terraform-010x)
+- [Useful documents you should read](#useful-documents-you-should-read)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Always Run terraform command with var-file
 
