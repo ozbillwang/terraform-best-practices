@@ -4,7 +4,9 @@ Terraform Best Practices for AWS users.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+**Table of Contents**  
+
+*generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Always Run terraform command with var-file](#always-run-terraform-command-with-var-file)
 - [Manage s3 backend for tfstate files](#manage-s3-backend-for-tfstate-files)
@@ -70,7 +72,7 @@ kms_key_id = "alias/terraform"
 dynamodb_table = "terraform-lock"
 ```
 
-### Notes:
+### Notes
 
 - bucket - s3 bucket name, has to be globally unique.
 - key - Set some meanful names for different services and applications, such as vpc.tfstate, application_name.tfstate, etc
@@ -120,7 +122,7 @@ For detail, you can start from below links:
 
 [Terraform aws modules](https://github.com/terraform-aws-modules)
 
-### NOTES:
+### Notes
 
 terraform modules don't support `count` parameter currently. You can follow up this ticket for updates: https://github.com/hashicorp/terraform/issues/953
 
@@ -204,7 +206,7 @@ For details on how to run `terraform-docs`, check this repository: https://githu
 
 There is a simple sample for you to start [tf_aws_acme](https://github.com/BWITS/tf_aws_acme), the README is generatd by `terraform-docs`
 
-## update terraform version
+## Update terraform version
 
 Hashicorp doesn't have a good qa/build/release process for their software and does not follow semantic versioning rules.
 
@@ -233,7 +235,7 @@ With the tool [terraform-landscape](https://github.com/coinbase/terraform-landsc
     gem install terraform_landscape
     landscape < report
 
-## some updates for terraform 0.10.x
+## Some updates for terraform 0.10.x
 
 After Hashicorp splits terraform providers out of terraform core binary from v0.10.x, you will see errors to complain aws, template, terraform provider version are not installed when run `terraform init`
 
