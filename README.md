@@ -6,7 +6,7 @@ Terraform Best Practices for AWS users.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  
 
-*generated with [DocToc](https://github.com/thlorenz/doctoc)*
+*Table of Contents is generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Always Run terraform command with var-file](#always-run-terraform-command-with-var-file)
 - [Manage s3 backend for tfstate files](#manage-s3-backend-for-tfstate-files)
