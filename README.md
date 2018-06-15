@@ -6,24 +6,22 @@ Terraform Best Practices for AWS users.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  
 
-*Table of Contents is generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
 - [Always Run terraform command with var-file](#always-run-terraform-command-with-var-file)
 - [Manage s3 backend for tfstate files](#manage-s3-backend-for-tfstate-files)
-  - [Notes:](#notes)
+  - [Notes](#notes)
 - [Retrieves state meta data from a remote backend](#retrieves-state-meta-data-from-a-remote-backend)
 - [Use share modules](#use-share-modules)
-  - [NOTES:](#notes)
+  - [Notes](#notes-1)
 - [Isolate environment](#isolate-environment)
 - [Use terraform import to include as more resources you can](#use-terraform-import-to-include-as-more-resources-you-can)
 - [Avoid hard code the resources](#avoid-hard-code-the-resources)
 - [Format terraform codes](#format-terraform-codes)
 - [Enable version control on terraform state files bucket](#enable-version-control-on-terraform-state-files-bucket)
 - [Generate README for each module about input and output variables](#generate-readme-for-each-module-about-input-and-output-variables)
-- [update terraform version](#update-terraform-version)
+- [Update terraform version](#update-terraform-version)
 - [Run terraform from docker container](#run-terraform-from-docker-container)
 - [Troubleshooting with messy output](#troubleshooting-with-messy-output)
-- [some updates for terraform 0.10.x](#some-updates-for-terraform-010x)
+- [Some updates for terraform 0.10.x](#some-updates-for-terraform-010x)
 - [Useful documents you should read](#useful-documents-you-should-read)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -162,19 +160,21 @@ account_number=“123456789012"
 account_alias="mycompany"
 ```
 
-The current aws account id or account alias can be input directly via data sources.
+The current aws account id or account alias can be input directly via [data sources](https://www.terraform.io/docs/providers/aws/).
 
 ```
 # The attribute `${data.aws_caller_identity.current.account_id}` will be current account number. 
 data "aws_caller_identity" "current" {}
 
 # The attribue `${data.aws_iam_account_alias.current.account_alias}` will be current account alias
-# Tips: you can easly use this attribue to create terraform bucket with environment, project name, etc.
 data "aws_iam_account_alias" "current" {}
+
+# Set as [local values](https://www.terraform.io/docs/configuration/locals.html)
+locals {
+  account_id    = "${data.aws_caller_identity.current.account_id}"
+  account_alias = "${data.aws_iam_account_alias.current.account_alias}"
+}
 ```
-
-Refer: [terraform data sources](https://www.terraform.io/docs/providers/aws/)
-
 
 ## Format terraform codes
 
