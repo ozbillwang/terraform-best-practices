@@ -139,8 +139,12 @@ variable "environment" {
   default = ""
 }
 
+locals {
+  name_prefix    = "${var.application}-${var.environment}"
+}
+
 resource "<any_resource>" {
-  name = "${var.application}-${var.environment}-<resource_name>"
+  name = "${local.name_prefix}-<resource_name>"
   ...
 }
 ```
