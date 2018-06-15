@@ -229,11 +229,23 @@ TERRAFORM_CMD="docker run -ti --rm -w /app -v ${HOME}/.aws:/root/.aws -v ${HOME}
 
 Sometime, you applied the changes several times, the plan output always prompts there are some changes, essepecially in iam and s3 policy.  It is hard to troubleshooting the problem with messy json output in one line.
 
-With the tool [terraform-landscape](https://github.com/coinbase/terraform-landscape), it improves Terraform plan output to be easier to read and understand, you can easily find out where is the problem. For details, please go through the project at https://github.com/coinbase/terraform-landscape
+With the tool [terraform-landscape](https://github.com/coinbase/terraform-landscape), it improves Terraform plan output to be easier for reading, you can easily find out where is the problem. For details, please go through the project at https://github.com/coinbase/terraform-landscape
+
+    # Install terraform_landscape
+    gem install terraform_landscape
+    # On MacOS, you can install with brew
+    brew install terraform_landscape
 
     terraform plan -var-file=${env}/${env}.tfvars -input=false -out=plan -lock=false |tee report
-    gem install terraform_landscape
     landscape < report
+
+    # run terraform-landscape container as command
+    alias landscape="docker run -i --rm -v $(pwd):/apps alpine/landscape:0.1.18"
+    landscape --help
+    terraform plan |tee report
+    landscape - < report
+    # Or
+    terraform plan | landscape -
 
 ## Some updates for terraform 0.10.x
 
