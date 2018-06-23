@@ -21,6 +21,8 @@ Terraform Best Practices for AWS users.
 - [Update terraform version](#update-terraform-version)
 - [Run terraform from docker container](#run-terraform-from-docker-container)
 - [Troubleshooting with messy output](#troubleshooting-with-messy-output)
+- [Run test](#run-test)
+  - [Quick start](#quick-start)
 - [Some updates for terraform 0.10.x](#some-updates-for-terraform-010x)
 - [Useful documents you should read](#useful-documents-you-should-read)
 
@@ -250,6 +252,14 @@ With the tool [terraform-landscape](https://github.com/coinbase/terraform-landsc
     landscape - < report
     # Or
     terraform plan | landscape -
+
+## Run test
+
+Recommend to add [awspec](https://github.com/k1LoW/awspec) tests through [kitchen](https://kitchen.ci/) and [kitchen-terraform](https://newcontext-oss.github.io/kitchen-terraform/).
+
+### Quick start
+
+Reference: repo [terraform-aws-modules/terraform-aws-eks](https://github.com/terraform-aws-modules/terraform-aws-eks#testing)
 
 ## Some updates for terraform 0.10.x
 
