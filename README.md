@@ -23,6 +23,7 @@ Terraform Best Practices for AWS users.
 - [Troubleshooting with messy output](#troubleshooting-with-messy-output)
 - [Run test](#run-test)
   - [Quick start](#quick-start)
+  - [Run test within docker container](#run-test-within-docker-container)
 - [Some updates for terraform 0.10.x](#some-updates-for-terraform-010x)
 - [Useful documents you should read](#useful-documents-you-should-read)
 
@@ -260,6 +261,10 @@ Recommend to add [awspec](https://github.com/k1LoW/awspec) tests through [kitche
 ### Quick start
 
 Reference: repo [terraform-aws-modules/terraform-aws-eks](https://github.com/terraform-aws-modules/terraform-aws-eks#testing)
+
+### Run test within docker container
+
+Reference: [README for terraform awspec container](https://github.com/alpine-docker/bundler/tree/terraform-awspec)
 
 ## Some updates for terraform 0.10.x
 
