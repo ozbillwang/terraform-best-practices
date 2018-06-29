@@ -264,7 +264,7 @@ Reference: repo [terraform-aws-modules/terraform-aws-eks](https://github.com/ter
 
 ### Run test within docker container
 
-Reference: [README for terraform awspec container](https://github.com/alpine-docker/bundler/tree/terraform-awspec)
+Reference: [README for terraform awspec container](https://github.com/alpine-docker/bundle-terraform-awspec)
 
 ## Some updates for terraform 0.10.x
 
