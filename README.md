@@ -96,7 +96,7 @@ Terragrunt is a thin wrapper for Terraform that provides extra tools for working
 
 Sample for reference: https://github.com/gruntwork-io/terragrunt-infrastructure-live-example
 
-The README is too much talking, if you want quickly to use it, follow below steps:
+Its README is too much talking, if you want quickly to use it, follow below steps:
 
 ```
 # Install terraform and terragrunt
@@ -111,6 +111,8 @@ $ terragrunt plan
 # Confirm everything works
 $ terragrunt apply
 ```
+
+So if you followed the setting in terragrunt properly, you don't need to care the backend state files and variable file path in different environments, even more, you can run `terragrunt plan-all` to plan all modules together.
 
 ## Retrieves state meta data from a remote backend
 
