@@ -9,6 +9,7 @@ Terraform Best Practices for AWS users.
 - [Always Run terraform command with var-file](#always-run-terraform-command-with-var-file)
 - [Manage s3 backend for tfstate files](#manage-s3-backend-for-tfstate-files)
   - [Notes](#notes)
+- [Manage multiple Terraform modules and environment easily with Terragrunt](#manage-multiple-terraform-modules-and-environment-easily-with-terragrunt)
 - [Retrieves state meta data from a remote backend](#retrieves-state-meta-data-from-a-remote-backend)
 - [Use share modules](#use-share-modules)
   - [Notes](#notes-1)
@@ -87,6 +88,28 @@ terraform get -update=true
 terraform init -backend-config=config/backend-${env}.conf
 terraform plan -var-file=config/${env}.tfvars
 terraform apply -var-file=config/${env}.tfvars
+```
+
+## Manage multiple Terraform modules and environment easily with Terragrunt
+
+Terragrunt is a thin wrapper for Terraform that provides extra tools for working with multiple Terraform modules. https://www.gruntwork.io
+
+Sample for reference: https://github.com/gruntwork-io/terragrunt-infrastructure-live-example
+
+The README is too much talking, if you want quickly to use it, follow below steps:
+
+```
+# Install terraform and terragrunt
+# Make sure you are in right aws account
+$ aws s3 ls
+# use terragrunt to deploy
+$ git clone https://github.com/gruntwork-io/terragrunt-infrastructure-live-example.git
+$ cd terragrunt-infrastructure-live-example
+# for example, you want to deploy mysql in stage non-prod at region us-east-1
+$ cd non-prod/us-east-1/stage/mysql
+$ terragrunt plan
+# Confirm everything works
+$ terragrunt apply
 ```
 
 ## Retrieves state meta data from a remote backend
