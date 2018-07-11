@@ -26,6 +26,7 @@ Terraform Best Practices for AWS users.
   - [Quick start](#quick-start)
   - [Run test within docker container](#run-test-within-docker-container)
 - [Some updates for terraform 0.10.x](#some-updates-for-terraform-010x)
+- [Minimum AWS permissions necessary for a Terraform run](#minimum-aws-permissions-necessary-for-a-terraform-run)
 - [Useful documents you should read](#useful-documents-you-should-read)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -315,6 +316,64 @@ provider "terraform" {
   version = "~> 1.0"
 }
 ```
+## Minimum AWS permissions necessary for a Terraform run
+
+There will be no answer for this. But with below iam policy you can easily get started.
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowSpecifics",
+            "Action": [
+                "ec2:*",
+                "rds:*",
+                "s3:*",
+                "sns:*",
+                "sqs:*",
+                "iam:*",
+                "elasticloadbalancing:*",
+                "autoscaling:*",
+                "cloudwatch:*",
+                "cloudfront:*",
+                "route53:*",
+                "ecr:*",
+                "logs:*",
+                "ecs:*",
+                "application-autoscaling:*",
+                "logs:*",
+                "events:*",
+                "elasticache:*",
+                "es:*",
+                "kms:*",
+                "dynamodb:*"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Sid": "DenySpecifics",
+            "Action": [
+                "iam:*User*",
+                "iam:*Login*",
+                "iam:*Group*",
+                "iam:*Provider*",
+                "aws-portal:*",
+                "budgets:*",
+                "config:*",
+                "directconnect:*",
+                "aws-marketplace:*",
+                "aws-marketplace-management:*",
+                "ec2:*ReservedInstances*"
+            ],
+            "Effect": "Deny",
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+Depend on your company or project requirement, you can easily update the resources in `Allow` session which terraform commands should have, and add deny policies in `Deny` session if some of permissions are not required.
 
 ## Useful documents you should read
 
