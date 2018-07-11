@@ -96,7 +96,7 @@ Terragrunt is a thin wrapper for Terraform that provides extra tools for working
 
 Sample for reference: https://github.com/gruntwork-io/terragrunt-infrastructure-live-example
 
-Its README is too much talking, if you want quickly to use it, follow below steps:
+Its README is too much talking, if you need a quick start, follow below steps:
 
 ```
 # Install terraform and terragrunt
