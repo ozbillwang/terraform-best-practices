@@ -9,16 +9,16 @@ Terraform Best Practices for AWS users.
 - [Always Run terraform command with var-file](#always-run-terraform-command-with-var-file)
 - [Manage s3 backend for tfstate files](#manage-s3-backend-for-tfstate-files)
   - [Notes](#notes)
-- [Manage multiple Terraform modules and environment easily with Terragrunt](#manage-multiple-terraform-modules-and-environment-easily-with-terragrunt)
-- [Retrieves state meta data from a remote backend](#retrieves-state-meta-data-from-a-remote-backend)
-- [Use share modules](#use-share-modules)
+- [Manage multiple Terraform modules and environments easily with Terragrunt](#manage-multiple-terraform-modules-and-environments-easily-with-terragrunt)
+- [Retrieve state meta data from a remote backend](#retrieve-state-meta-data-from-a-remote-backend)
+- [Use shared modules](#use-shared-modules)
   - [Notes](#notes-1)
 - [Isolate environment](#isolate-environment)
-- [Use terraform import to include as more resources you can](#use-terraform-import-to-include-as-more-resources-you-can)
-- [Avoid hard code the resources](#avoid-hard-code-the-resources)
-- [Format terraform codes](#format-terraform-codes)
+- [Use terraform import to include as many resources you can](#use-terraform-import-to-include-as-many-resources-you-can)
+- [Avoid hard coding the resources](#avoid-hard-coding-the-resources)
+- [Format terraform code](#format-terraform-code)
 - [Enable version control on terraform state files bucket](#enable-version-control-on-terraform-state-files-bucket)
-- [Generate README for each module about input and output variables](#generate-readme-for-each-module-about-input-and-output-variables)
+- [Generate README for each module with input and output variables](#generate-readme-for-each-module-with-input-and-output-variables)
 - [Update terraform version](#update-terraform-version)
 - [Run terraform from docker container](#run-terraform-from-docker-container)
 - [Troubleshooting with messy output](#troubleshooting-with-messy-output)
@@ -45,13 +45,13 @@ $ terraform plan -var-file=config/dev.tfvars
 
 With `var-file`, you can easily manage environment (dev/stag/uat/prod) variables.
 
-With `var-file`, you avoid to run terraform with long list of key-value pairs ( `-var foo=bar` )
+With `var-file`, you avoid running terraform with long list of key-value pairs ( `-var foo=bar` )
 
 ## Manage s3 backend for tfstate files
 
-Terraform doesn't support [Interpolate variables in terraform backend config](https://github.com/hashicorp/terraform/pull/12067), normally you write a seperate script to define s3 backend bucket name for different environments, but I recommend to hard code it directly as below
+Terraform doesn't support [Interpolated variables in terraform backend config](https://github.com/hashicorp/terraform/pull/12067), normally you write a seperate script to define s3 backend bucket name for different environments, but I recommend to hard code it directly as below
 
-Add below codes in terraform configuration files.
+Add below code in terraform configuration files.
 ```
 $ cat main.tf
 
@@ -67,7 +67,7 @@ terraform {
 Define backend variables for particular environment
 ```
 $ cat config/backend-dev.conf
-bucket  = "<unique_bucke_name>-terraform-development"
+bucket  = "<unique_bucket_name>-terraform-development"
 key     = "development/service-1.tfstate"
 encrypt = true
 region  = "ap-southeast-2"
@@ -78,7 +78,7 @@ dynamodb_table = "terraform-lock"
 ### Notes
 
 - bucket - s3 bucket name, has to be globally unique.
-- key - Set some meanful names for different services and applications, such as vpc.tfstate, application_name.tfstate, etc
+- key - Set some meaningful names for different services and applications, such as vpc.tfstate, application_name.tfstate, etc
 - dynamodb_table - optional when you want to enable [State Locking](https://www.terraform.io/docs/state/locking.html)
 
 After you set `config/backend-dev.conf` and `config/dev.tfvars` properly (for each environment). You can easily run terraform as below:
@@ -91,13 +91,13 @@ terraform plan -var-file=config/${env}.tfvars
 terraform apply -var-file=config/${env}.tfvars
 ```
 
-## Manage multiple Terraform modules and environment easily with Terragrunt
+## Manage multiple Terraform modules and environments easily with Terragrunt
 
 Terragrunt is a thin wrapper for Terraform that provides extra tools for working with multiple Terraform modules. https://www.gruntwork.io
 
 Sample for reference: https://github.com/gruntwork-io/terragrunt-infrastructure-live-example
 
-Its README is too much talking, if you need a quick start, follow below steps:
+Its README is too long, if you need a quick start, follow below steps:
 
 ```
 # Install terraform and terragrunt
@@ -113,9 +113,9 @@ $ terragrunt plan
 $ terragrunt apply
 ```
 
-So if you followed the setting in terragrunt properly, you don't need to care the backend state files and variable file path in different environments, even more, you can run `terragrunt plan-all` to plan all modules together.
+So if you followed the setting in terragrunt properly, you don't need to care about the backend state files and variable file path in different environments, even more, you can run `terragrunt plan-all` to plan all modules together.
 
-## Retrieves state meta data from a remote backend
+## Retrieve state meta data from a remote backend
 
 Normally we have several layers to manage terraform resources, such as network, database, application layers. After you create the basic network resources, such as vpc, security group, subnets, nat gateway in vpc stack. Your database layer and applications layer should always refer the resource from vpc layer directly via `terraform_remote_state` data srouce. 
 
@@ -137,7 +137,7 @@ resource "aws_xx_xxxx" "main" {
 }
 ```
 
-## Use share modules
+## Use shared modules
 
 Manage terraform resource with shared modules, this will save a lot of coding time. 
 
@@ -177,15 +177,15 @@ resource "<any_resource>" {
   ...
 }
 ```
-Wth that, you will easily define the resource with meaningful and unique name, and you can build more same application stack for different developers without change a lot. For example, you update the environment to dev1, dev2, etc.
+Wth that, you will easily define the resource with a meaningful and unique name, and you can build more of the same application stack for different developers without change a lot. For example, you update the environment to dev1, dev2, etc.
 
-## Use terraform import to include as more resources you can
+## Use terraform import to include as many resources you can
 
-Sometimes developers manually created resources directly. You need to mark these resource and use `terraform import` to include them in codes.
+Sometimes developers manually created resources. You need to mark these resource and use `terraform import` to include them in codes.
 
 [terraform import](https://www.terraform.io/docs/import/usage.html)
 
-## Avoid hard code the resources
+## Avoid hard coding the resources
 
 A sample:
 ```
@@ -209,11 +209,11 @@ locals {
 }
 ```
 
-## Format terraform codes
+## Format terraform code
 
-Always run `terraform fmt` to format terraform configuration files and make them neatly.
+Always run `terraform fmt` to format terraform configuration files and make them neat.
 
-I used below codes in Travis CI pipeline (you can re-use it in any pipelines) to validate and format check the codes before you can merge it to master branch.
+I used below code in Travis CI pipeline (you can re-use it in any pipelines) to validate and format check the codes before you can merge it to master branch.
 
       - find . -type f -name "*.tf" -exec dirname {} \;|sort -u | while read m; do (terraform validate -check-variables=false "$m" && echo "√ $m") || exit 1 ; done
       - if [ `terraform fmt | wc -c` -ne 0 ]; then echo "Some terraform files need be formatted, run 'terraform fmt' to fix"; exit 1; fi
@@ -223,9 +223,9 @@ I used below codes in Travis CI pipeline (you can re-use it in any pipelines) to
 
 Always set backend to s3 and enable version control on this bucket. 
 
-If you'd like to manage terraform state bucket as well, recommend to use this repostory I wrote [tf_aws_tfstate_bucket](https://github.com/BWITS/tf_aws_tfstate_bucket) to create the bucket and replica to other regions automatically. 
+If you'd like to manage terraform state bucket as well, I recommend using this repostory I wrote [tf_aws_tfstate_bucket](https://github.com/BWITS/tf_aws_tfstate_bucket) to create the bucket and replicate to other regions automatically. 
 
-## Generate README for each module about input and output variables
+## Generate README for each module with input and output variables
 
 You needn't manually manage `USAGE` about input variables and outputs. [terraform-docs](https://github.com/segmentio/terraform-docs) can do this job automatically.
 
