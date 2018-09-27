@@ -185,7 +185,7 @@ Sometimes developers manually created resources. You need to mark these resource
 
 [terraform import](https://www.terraform.io/docs/import/usage.html)
 
-## Avoid hard code the resources
+## Avoid hard coding the resources
 
 A sample:
 ```
