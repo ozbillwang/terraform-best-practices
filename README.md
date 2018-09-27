@@ -16,7 +16,7 @@ Terraform Best Practices for AWS users.
 - [Isolate environment](#isolate-environment)
 - [Use terraform import to include as many resources you can](#use-terraform-import-to-include-as-many-resources-you-can)
 - [Avoid hard coding the resources](#avoid-hard-coding-the-resources)
-- [Format terraform code](#format-terraform-codes)
+- [Format terraform code](#format-terraform-code)
 - [Enable version control on terraform state files bucket](#enable-version-control-on-terraform-state-files-bucket)
 - [Generate README for each module with input and output variables](#generate-readme-for-each-module-with-input-and-output-variables)
 - [Update terraform version](#update-terraform-version)
