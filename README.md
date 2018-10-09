@@ -27,6 +27,8 @@ Terraform Best Practices for AWS users.
   - [Run test within docker container](#run-test-within-docker-container)
 - [Some updates for terraform 0.10.x](#some-updates-for-terraform-010x)
 - [Minimum AWS permissions necessary for a Terraform run](#minimum-aws-permissions-necessary-for-a-terraform-run)
+- [Tips to deal with lambda functions](#tips-to-deal-with-lambda-functions)
+  - [explanation](#explanation)
 - [Useful documents you should read](#useful-documents-you-should-read)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -374,6 +376,39 @@ There will be no answer for this. But with below iam policy you can easily get s
 ```
 
 Depend on your company or project requirement, you can easily update the resources in `Allow` session which terraform commands should have, and add deny policies in `Deny` session if some of permissions are not required.
+
+## Tips to deal with lambda functions
+
+Headache to save python packages from `pip install` into source codes and generate lambda zip file manually? Here is full codes with solution.
+
+The folder [lambda](./lambda) includes all codes, here is the explanation.
+
+```
+$ tree
+.
+├── lambda.tf              # terraform HCL to deal with lambda
+├── pip.sh                 # script to install python packages with pip.
+└── source
+    ├── .gitignore         # Ignore all other files
+    ├── main.py            # Lambda function, replace with yours
+    ├── requirements.txt   # python package list, replace with your.
+    └── setup.cfg          # Useful for mac users who installed python using Homebrew
+```
+
+Replace `main.py` and `requirements.txt` with your applications.
+
+### explanation
+
+After you run `terraform apply`, it will:
+
+1. install all pip packages into source folder
+2. zip the source folder to `source.zip`
+3. deploy lambda function with `source.zip`
+4. because of `source/.gitignore`, it will ignore all new installed pip packages in git source codes.
+
+This solution is reference from the comments in [Ability to zip AWS Lambda function on the fly](https://github.com/hashicorp/terraform/issues/8344#issuecomment-345807204))
+
+You should be fine to do the same for lambda functions using nodejs (`npm install`) or other languages.
 
 ## Useful documents you should read
 
