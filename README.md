@@ -391,7 +391,7 @@ $ tree
 └── source
     ├── .gitignore         # Ignore all other files
     ├── main.py            # Lambda function, replace with yours
-    ├── requirements.txt   # python package list, replace with your.
+    ├── requirements.txt   # python package list, replace with yours.
     └── setup.cfg          # Useful for mac users who installed python using Homebrew
 ```
 
@@ -408,7 +408,7 @@ After you run `terraform apply`, it will:
 
 This solution is reference from the comments in [Ability to zip AWS Lambda function on the fly](https://github.com/hashicorp/terraform/issues/8344#issuecomment-345807204))
 
-You should be fine to do the same for lambda functions using nodejs (`npm install`) or other languages.
+You should be fine to do the same for lambda functions using nodejs (`npm install`) or other languages with this tip.
 
 ## Useful documents you should read
 
