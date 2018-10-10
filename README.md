@@ -29,6 +29,7 @@ Terraform Best Practices for AWS users.
 - [Minimum AWS permissions necessary for a Terraform run](#minimum-aws-permissions-necessary-for-a-terraform-run)
 - [Tips to deal with lambda functions](#tips-to-deal-with-lambda-functions)
   - [explanation](#explanation)
+  - [Notes](#Notes)
 - [Useful documents you should read](#useful-documents-you-should-read)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -409,6 +410,10 @@ After you run `terraform apply`, it will:
 This solution is reference from the comments in [Ability to zip AWS Lambda function on the fly](https://github.com/hashicorp/terraform/issues/8344#issuecomment-345807204))
 
 You should be fine to do the same for lambda functions using nodejs (`npm install`) or other languages with this tip.
+
+### Notes
+
+You need have python/pip installed when run terraform commands, if you run in terraform container, make sure you install python/pip in it. 
 
 ## Useful documents you should read
 
