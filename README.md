@@ -25,11 +25,10 @@ Terraform Best Practices for AWS users.
 - [Run test](#run-test)
   - [Quick start](#quick-start)
   - [Run test within docker container](#run-test-within-docker-container)
-- [Some updates for terraform 0.10.x](#some-updates-for-terraform-010x)
 - [Minimum AWS permissions necessary for a Terraform run](#minimum-aws-permissions-necessary-for-a-terraform-run)
 - [Tips to deal with lambda functions](#tips-to-deal-with-lambda-functions)
   - [explanation](#explanation)
-  - [Notes](#Notes)
+  - [Notes](#notes-2)
 - [Useful documents you should read](#useful-documents-you-should-read)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
