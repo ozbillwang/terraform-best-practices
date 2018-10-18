@@ -281,6 +281,10 @@ With the tool [terraform-landscape](https://github.com/coinbase/terraform-landsc
     # Or
     terraform plan | landscape -
 
+Another quick way to handle the messy output is to run below command, if you manually copy the part of messy output to a file
+
+    cat output.txt | grep -Ev '"([^"]*)" => "\1"'
+
 ## Run test
 
 Recommend to add [awspec](https://github.com/k1LoW/awspec) tests through [kitchen](https://kitchen.ci/) and [kitchen-terraform](https://newcontext-oss.github.io/kitchen-terraform/).
