@@ -297,30 +297,6 @@ Reference: repo [terraform-aws-modules/terraform-aws-eks](https://github.com/ter
 
 Reference: [README for terraform awspec container](https://github.com/alpine-docker/bundle-terraform-awspec)
 
-## Some updates for terraform 0.10.x
-
-After Hashicorp splits terraform providers out of terraform core binary from v0.10.x, you will see errors to complain aws, template, terraform provider version are not installed when run `terraform init`
-
-```
-* provider.aws: no suitable version installed
-  version requirements: "~> 1.0"
-```
-Please add below codes to `main.tf`
-
-```
-provider "aws" {
-  version = "~> 1.0"
-  region  = "${var.region}"
-}
-
-provider "template" {
-  version = "~> 1.0"
-}
-
-provider "terraform" {
-  version = "~> 1.0"
-}
-```
 ## Minimum AWS permissions necessary for a Terraform run
 
 There will be no answer for this. But with below iam policy you can easily get started.
