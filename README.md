@@ -218,9 +218,8 @@ Always run `terraform fmt` to format terraform configuration files and make them
 I used below code in Travis CI pipeline (you can re-use it in any pipelines) to validate and format check the codes before you can merge it to master branch.
 
       - find . -type f -name "*.tf" -exec dirname {} \;|sort -u | while read m; do (terraform validate -check-variables=false "$m" && echo "√ $m") || exit 1 ; done
-      - if [ `terraform fmt | wc -c` -ne 0 ]; then echo "Some terraform files need be formatted, run 'terraform fmt' to fix"; exit 1; fi
+      - terraform fmt -check=true -write=false -diff=true
       
-
 ## Enable version control on terraform state files bucket
 
 Always set backend to s3 and enable version control on this bucket. 
