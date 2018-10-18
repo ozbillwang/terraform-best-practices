@@ -163,12 +163,11 @@ Sometimes, developers like to create a security group and share it to all non-pr
 ```
 variable "application" {
   description = "application name"
-  default = ""
+  default = "<replace_with_your_project_or_application_name>"
 }
 
 variable "environment" {
   description = "environment name"
-  default = ""
 }
 
 locals {
