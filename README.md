@@ -141,9 +141,9 @@ resource "aws_xx_xxxx" "main" {
 
 ## Use shared modules
 
-Manage terraform resource with shared modules, this will save a lot of coding time. 
+Manage terraform resource with shared modules, this will save a lot of coding time. No need re-invent the wheel!
 
-For detail, you can start from below links: 
+You can start from below links: 
 
 [terraform module usage](https://www.terraform.io/docs/modules/usage.html)
 
@@ -178,7 +178,7 @@ resource "<any_resource>" {
   ...
 }
 ```
-Wth that, you will easily define the resource with a meaningful and unique name, and you can build more of the same application stack for different developers without change a lot. For example, you update the environment to dev1, dev2, etc.
+Wth that, you will easily define the resource with a meaningful and unique name, and you can build more of the same application stack for different developers without change a lot. For example, you update the environment to dev, staging, uat, prod, etc.
 
 ## Use terraform import to include as many resources you can
 
