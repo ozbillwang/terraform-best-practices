@@ -28,9 +28,9 @@ Terraform Best Practices for AWS users.
 - [Minimum AWS permissions necessary for a Terraform run](#minimum-aws-permissions-necessary-for-a-terraform-run)
 - [Tips to deal with lambda functions](#tips-to-deal-with-lambda-functions)
   - [explanation](#explanation)
+  - [Notes](#notes-2)
 - [usage of variable "self"](#usage-of-variable-self)
   - [One more use case](#one-more-use-case)
-  - [Notes](#notes-2)
 - [Useful documents you should read](#useful-documents-you-should-read)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -390,6 +390,10 @@ This solution is reference from the comments in [Ability to zip AWS Lambda funct
 
 You should be fine to do the same for lambda functions using nodejs (`npm install`) or other languages with this tip.
 
+### Notes
+
+You need have python/pip installed when run terraform commands, if you run in terraform container, make sure you install python/pip in it.
+
 ## usage of variable "self"
 
 Quote from terraform documents:
@@ -417,9 +421,7 @@ You can easily define ecr image url (`<account_id>.dkr.ecr.<aws_region>.amazonaw
 
 Any attributes in this resource can be self referenced by this way.
 
-### Notes
-
-You need have python/pip installed when run terraform commands, if you run in terraform container, make sure you install python/pip in it. 
+Reference: https://github.com/shuaibiyy/terraform-ecs-jenkins/blob/master/docker/main.tf
 
 ## Useful documents you should read
 
