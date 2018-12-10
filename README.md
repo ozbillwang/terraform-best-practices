@@ -28,6 +28,8 @@ Terraform Best Practices for AWS users.
 - [Minimum AWS permissions necessary for a Terraform run](#minimum-aws-permissions-necessary-for-a-terraform-run)
 - [Tips to deal with lambda functions](#tips-to-deal-with-lambda-functions)
   - [explanation](#explanation)
+- [usage of variable "self"](#usage-of-variable-self)
+  - [One more use case](#one-more-use-case)
   - [Notes](#notes-2)
 - [Useful documents you should read](#useful-documents-you-should-read)
 
@@ -387,6 +389,33 @@ After you run `terraform apply`, it will:
 This solution is reference from the comments in [Ability to zip AWS Lambda function on the fly](https://github.com/hashicorp/terraform/issues/8344#issuecomment-345807204))
 
 You should be fine to do the same for lambda functions using nodejs (`npm install`) or other languages with this tip.
+
+## usage of variable "self"
+
+Quote from terraform documents:
+>Attributes of your own resource
+
+>The syntax is self.ATTRIBUTE. For example ${self.private_ip} will interpolate that resource's private IP address.
+
+>Note: The self.ATTRIBUTE syntax is only allowed and valid within provisioners.
+
+### One more use case
+```
+resource "aws_ecr_repository" "jenkins" {
+  name = "${var.image_name}"
+  provisioner "local-exec" {
+    command = "./deploy-image.sh ${self.repository_url} ${var.jenkins_image_name}"
+  }
+}
+
+variable "jenkins_image_name" {
+  default = "mycompany/jenkins"
+  description = "Jenkins image name."
+}
+```
+You can easily define ecr image url (`<account_id>.dkr.ecr.<aws_region>.amazonaws.com/<image_name>`) with ${self.repository_url}
+
+Any attributes in this resource can be self referenced by this way.
 
 ### Notes
 
