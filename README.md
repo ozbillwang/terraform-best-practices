@@ -31,6 +31,7 @@ Terraform Best Practices for AWS users.
   - [Notes](#notes-2)
 - [usage of variable "self"](#usage-of-variable-self)
   - [One more use case](#one-more-use-case)
+- [Use pre-installed Terraform plugins](#use-pre-installed-terraform-plugins)
 - [Useful documents you should read](#useful-documents-you-should-read)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -422,6 +423,12 @@ You can easily define ecr image url (`<account_id>.dkr.ecr.<aws_region>.amazonaw
 Any attributes in this resource can be self referenced by this way.
 
 Reference: https://github.com/shuaibiyy/terraform-ecs-jenkins/blob/master/docker/main.tf
+
+## Use pre-installed Terraform plugins
+
+There is a way to use pre-installed Terraform plugins instead of downloading them with `terraform init`, the accepted answer below gives the detail:
+
+[Use pre-installed Terraform plugins instead of downloading them with terraform init](https://stackoverflow.com/questions/50944395/use-pre-installed-terraform-plugins-instead-of-downloading-them-with-terraform-i?rq=1)
 
 ## Useful documents you should read
 
