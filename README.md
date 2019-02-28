@@ -258,7 +258,9 @@ Recommend to run terraform docker container, when you set your build job in CI/C
 
 ```
 TERRAFORM_IMAGE=hashicorp/terraform:0.9.8
-TERRAFORM_CMD="docker run -ti --rm -w /app -v ${HOME}/.aws:/root/.aws -v ${HOME}/.ssh:/root/.ssh -v `pwd`:/app -w /app $TERRAFORM_IMAGE"
+TERRAFORM_CMD="docker run -ti --rm -w /app -v ${HOME}/.aws:/root/.aws -v ${HOME}/.ssh:/root/.ssh -v `pwd`:/app -w /app ${TERRAFORM_IMAGE}"
+${TERRAFORM_CMD} init
+${TERRAFORM_CMD} plan
 ```
 
 ## Troubleshooting with messy output
