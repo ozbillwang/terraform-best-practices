@@ -304,17 +304,20 @@ Reference: [README for terraform awspec container](https://github.com/alpine-doc
 ## Minimum AWS permissions necessary for a Terraform run
 
 There will be no answer for this. But with below iam policy you can easily get started.
-```
+```json
 {
     "Version": "2012-10-17",
     "Statement": [
         {
             "Sid": "AllowSpecifics",
             "Action": [
+                "lambda:*",
+                "apigateway:*",
                 "ec2:*",
                 "rds:*",
                 "s3:*",
                 "sns:*",
+                "ssm:*",
                 "sqs:*",
                 "iam:*",
                 "elasticloadbalancing:*",
