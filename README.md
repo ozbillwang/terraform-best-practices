@@ -317,6 +317,7 @@ There will be no answer for this. But with below iam policy you can easily get s
                 "rds:*",
                 "s3:*",
                 "sns:*",
+                "states:*",
                 "ssm:*",
                 "sqs:*",
                 "iam:*",
