@@ -181,7 +181,7 @@ resource "<any_resource>" {
   ...
 }
 ```
-Wth that, you will easily define the resource with a meaningful and unique name, and you can build more of the same application stack for different developers without change a lot. For example, you update the environment to dev, staging, uat, prod, etc.
+With that, you will easily define the resource with a meaningful and unique name, and you can build more of the same application stack for different developers without change a lot. For example, you update the environment to dev, staging, uat, prod, etc.
 
 ## Use terraform import to include as many resources you can
 
