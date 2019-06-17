@@ -1,9 +1,9 @@
 # codes for pip install and zip packaging
 resource "null_resource" "pip" {
   triggers {
-    main         = "${base64sha256(file("source/main.py"))}"
-    requirements = "${base64sha256(file("source/requirements.txt"))}"
-    execute      = "${base64sha256(file("pip.sh"))}"
+    main         = "${base64sha256(file("${path.module}/source/main.py"))}"
+    requirements = "${base64sha256(file("${path.module}/source/requirements.txt"))}"
+    execute      = "${base64sha256(file("${path.module}/pip.sh"))}"
   }
 
   provisioner "local-exec" {
@@ -41,7 +41,7 @@ EOF
 }
 
 resource "aws_lambda_function" "source" {
-  filename         = "source.zip"
+  filename         = "${path.module}/source.zip"
   source_code_hash = "${data.archive_file.source.output_base64sha256}"
   function_name    = "lamda"
   role             = "${aws_iam_role.lambda.arn}"
