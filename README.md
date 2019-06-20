@@ -264,6 +264,7 @@ ${TERRAFORM_CMD} plan
 ```
 
 ## Troubleshooting with messy output
+> (Decommioned) after terraform v0.12.x, we needn't run with terraform-landscape any more. The new output looks nice already. 
 
 Sometime, you applied the changes several times, the plan output always prompts there are some changes, essepecially in iam and s3 policy.  It is hard to troubleshooting the problem with messy json output in one line.
 
