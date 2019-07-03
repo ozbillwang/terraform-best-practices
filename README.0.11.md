@@ -17,11 +17,12 @@ Terraform Best Practices for AWS users.
 - [Isolate environment](#isolate-environment)
 - [Use terraform import to include as many resources you can](#use-terraform-import-to-include-as-many-resources-you-can)
 - [Avoid hard coding the resources](#avoid-hard-coding-the-resources)
-- [validate and format terraform code](#validate-and-format-terraform-code)
+- [Format terraform code](#format-terraform-code)
 - [Enable version control on terraform state files bucket](#enable-version-control-on-terraform-state-files-bucket)
 - [Generate README for each module with input and output variables](#generate-readme-for-each-module-with-input-and-output-variables)
 - [Update terraform version](#update-terraform-version)
-- [Run terraform in docker container](#run-terraform-in-docker-container)
+- [Run terraform from docker container](#run-terraform-from-docker-container)
+- [Troubleshooting with messy output - (Decommissioned)](#troubleshooting-with-messy-output---decommissioned)
 - [Run test](#run-test)
   - [Quick start](#quick-start)
   - [Run test within docker container](#run-test-within-docker-container)
@@ -32,12 +33,9 @@ Terraform Best Practices for AWS users.
 - [usage of variable "self"](#usage-of-variable-self)
   - [One more use case](#one-more-use-case)
 - [Use pre-installed Terraform plugins](#use-pre-installed-terraform-plugins)
-- [Tips to upgrade to terraform 0.12](#tips-to-upgrade-to-terraform-012)
 - [Useful documents you should read](#useful-documents-you-should-read)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
->the READM for terraform version 0.11 and less has been renamed to [README.0.11.md](README.0.11.md)
 
 ## Run terraform command with var-file
 
@@ -64,7 +62,7 @@ Add below code in terraform configuration files.
 $ cat main.tf
 
 terraform {
-  required_version = "~> 0.12"
+  required_version = "~> 0.10"
 
   backend "s3" {
     encrypt = true
@@ -130,18 +128,18 @@ Normally we have several layers to manage terraform resources, such as network, 
 ```
 data "terraform_remote_state" "vpc" {
   backend = "s3"
-  config = {
-    bucket = var.s3_terraform_bucket
-    key    = "${var.environment}/vpc.tfstate"
-    region = var.aws_region
+  config{
+    bucket = "${var.s3_terraform_bucket}"
+    key = "${var.environment}/vpc.tfstate"
+    region="${var.aws_region}"
   }
 }
  
 # Retrieves the vpc_id and subnet_ids directly from remote backend state files.
 resource "aws_xx_xxxx" "main" {
   # ...
-  subnet_ids = split(",", data.terraform_remote_state.vpc.data_subnets)
-  vpc_id     = data.terraform_remote_state.vpc.vpc_id
+  subnet_ids = "${split(",", data.terraform_remote_state.vpc.data_subnets)}"
+  vpc_id     = "${data.terraform_remote_state.vpc.vpc_id}"
 }
 ```
 
@@ -226,21 +224,21 @@ data "aws_region" "current" {}
 
 # Set as [local values](https://www.terraform.io/docs/configuration/locals.html)
 locals {
-  account_id    = data.aws_caller_identity.current.account_id
-  account_alias = data.aws_iam_account_alias.current.account_alias
-  region        = data.aws_region.current.name
+  account_id    = "${data.aws_caller_identity.current.account_id}"
+  account_alias = "${data.aws_iam_account_alias.current.account_alias}"
+  region        = "${data.aws_region.current.name}"
 }
 ```
 
-## validate and format terraform code
+## Format terraform code
 
 Always run `terraform fmt` to format terraform configuration files and make them neat.
 
 I used below code in Travis CI pipeline (you can re-use it in any pipelines) to validate and format check the codes before you can merge it to master branch.
 
-      - terraform validate
+      - find . -type f -name "*.tf" -exec dirname {} \;|sort -u | while read m; do (terraform validate -check-variables=false "$m" && echo "√ $m") || exit 1 ; done
       - terraform fmt -check=true -write=false -diff=true
-
+      
 ## Enable version control on terraform state files bucket
 
 Always set backend to s3 and enable version control on this bucket. 
@@ -269,29 +267,45 @@ For example, `terraform init` isn't compatible between 0.9 and 0.8. Now they are
 
 So recommend to keep updating to latest terraform version
 
-## Run terraform in docker container
+## Run terraform from docker container
 
 Terraform releases official docker containers that you can easily control which version you can run.
 
 Recommend to run terraform docker container, when you set your build job in CI/CD pipeline.
 
 ```
-TERRAFORM_IMAGE=hashicorp/terraform:0.12.3
+TERRAFORM_IMAGE=hashicorp/terraform:0.9.8
 TERRAFORM_CMD="docker run -ti --rm -w /app -v ${HOME}/.aws:/root/.aws -v ${HOME}/.ssh:/root/.ssh -v `pwd`:/app -w /app ${TERRAFORM_IMAGE}"
 ${TERRAFORM_CMD} init
 ${TERRAFORM_CMD} plan
 ```
 
-Or with `terragrunt`
+## Troubleshooting with messy output - (Decommissioned)
+> (Decommissioned) after terraform v0.12.x, we needn't run with `terraform-landscape` any more. The new terraform output looks nice already.
 
-```
-# (1) must mount the local folder to /apps in container.
-# (2) must mount the aws credentials and ssh config folder in container.
-$ docker run -ti --rm -v $HOME/.aws:/root/.aws -v ${HOME}/.ssh:/root/.ssh -v `pwd`:/apps alpine/terragrunt:0.12.3 bash
-# cd to terragrunt configuration directory, if required.
-$ terragrunt plan-all
-$ terragrunt apply-all
-```
+Sometime, you applied the changes several times, the plan output always prompts there are some changes, essepecially in iam and s3 policy.  It is hard to troubleshooting the problem with messy json output in one line.
+
+With the tool [terraform-landscape](https://github.com/coinbase/terraform-landscape), it improves Terraform plan output to be easier for reading, you can easily find out where is the problem. For details, please go through the project at https://github.com/coinbase/terraform-landscape
+
+    # Install terraform_landscape
+    gem install terraform_landscape
+    # On MacOS, you can install with brew
+    brew install terraform_landscape
+
+    terraform plan -var-file=${env}/${env}.tfvars -input=false -out=plan -lock=false |tee report
+    landscape < report
+
+    # run terraform-landscape container as command
+    alias landscape="docker run -i --rm -v $(pwd):/apps alpine/landscape:0.1.18"
+    landscape --help
+    terraform plan |tee report
+    landscape - < report
+    # Or
+    terraform plan | landscape -
+
+Another quick way to handle the messy output is to run below command, if you manually copy the part of messy output to a file
+
+    cat output.txt | grep -Ev '"([^"]*)" => "\1"'
 
 ## Run test
 
@@ -417,7 +431,7 @@ Quote from terraform documents:
 ### One more use case
 ```
 resource "aws_ecr_repository" "jenkins" {
-  name = var.image_name
+  name = "${var.image_name}"
   provisioner "local-exec" {
     command = "./deploy-image.sh ${self.repository_url} ${var.jenkins_image_name}"
   }
@@ -440,33 +454,6 @@ There is a way to use pre-installed Terraform plugins instead of downloading the
 
 [Use pre-installed Terraform plugins instead of downloading them with terraform init](https://stackoverflow.com/questions/50944395/use-pre-installed-terraform-plugins-instead-of-downloading-them-with-terraform-i?rq=1)
 
-## Tips to upgrade to terraform 0.12
-
-If you have any codes older than 0.12, please go through official documents first,
-
-* [terraform Input Variables](https://www.terraform.io/docs/configuration/variables.html), a lot of new features you have to know.
-* [Upgrading to Terraform v0.12](https://www.terraform.io/upgrade-guides/0-12.html)
-* [terraform command 0.12upgrade](https://www.terraform.io/docs/commands/0.12upgrade.html)
-* [Announcing Terraform 0.12](https://www.hashicorp.com/blog/announcing-terraform-0-12)
-
-Then here are extra tips for you.
-
-* upgrade to terraform 0.11 first, if you have any.
-* upgrade terraform moudles to 0.12 first, because terraform 0.12 can't work with 0.11 modules.
-* Add aws provider, otherwise, you can't pass the validate check.
-
-```
-variable "region" {
-  description = "region"
-  type        = string
-  default     = "us-east-2"
-}
-
-provider "aws" {
-  region = var.region
-}
-```
- 
 ## Useful documents you should read
 
 [terraform tips & tricks: loops, if-statements, and gotchas](https://blog.gruntwork.io/terraform-tips-tricks-loops-if-statements-and-gotchas-f739bbae55f9)
