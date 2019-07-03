@@ -22,7 +22,7 @@ Terraform Best Practices for AWS users.
 - [Generate README for each module with input and output variables](#generate-readme-for-each-module-with-input-and-output-variables)
 - [Update terraform version](#update-terraform-version)
 - [Run terraform from docker container](#run-terraform-from-docker-container)
-- [Troubleshooting with messy output - (Decommioned)](#troubleshooting-with-messy-output---decommioned)
+- [Troubleshooting with messy output - (Decommissioned)](#troubleshooting-with-messy-output---decommissioned)
 - [Run test](#run-test)
   - [Quick start](#quick-start)
   - [Run test within docker container](#run-test-within-docker-container)
@@ -273,7 +273,7 @@ ${TERRAFORM_CMD} init
 ${TERRAFORM_CMD} plan
 ```
 
-## Troubleshooting with messy output - (Decommioned)
+## Troubleshooting with messy output - (Decommissioned)
 > (Decommioned) after terraform v0.12.x, we needn't run with terraform-landscape any more. The new terraform output looks nice already.
 
 Sometime, you applied the changes several times, the plan output always prompts there are some changes, essepecially in iam and s3 policy.  It is hard to troubleshooting the problem with messy json output in one line.
