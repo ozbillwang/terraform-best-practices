@@ -193,6 +193,8 @@ resource "<any_resource>" {
 ```
 With that, you will easily define the resource with a meaningful and unique name, and you can build more of the same application stack for different developers without change a lot. For example, you update the environment to dev, staging, uat, prod, etc.
 
+>Tips: some aws resource names have length limits, such as less than 24 characters, so when you define variables of application and environment name, use short name.
+
 ## Use terraform import to include as many resources you can
 
 Sometimes developers manually created resources. You need to mark these resource and use `terraform import` to include them in codes.
