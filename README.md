@@ -6,11 +6,12 @@ Terraform Best Practices for AWS users.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  
 
-- [Always Run terraform command with var-file](#always-run-terraform-command-with-var-file)
+- [Run terraform command with var-file](#run-terraform-command-with-var-file)
 - [Manage s3 backend for tfstate files](#manage-s3-backend-for-tfstate-files)
   - [Notes](#notes)
 - [Manage multiple Terraform modules and environments easily with Terragrunt](#manage-multiple-terraform-modules-and-environments-easily-with-terragrunt)
 - [Retrieve state meta data from a remote backend](#retrieve-state-meta-data-from-a-remote-backend)
+- [Turn on debug when you need do troubleshooting.](#turn-on-debug-when-you-need-do-troubleshooting)
 - [Use shared modules](#use-shared-modules)
   - [Notes](#notes-1)
 - [Isolate environment](#isolate-environment)
@@ -36,7 +37,7 @@ Terraform Best Practices for AWS users.
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Always Run terraform command with var-file
+## Run terraform command with var-file
 
 ```
 $ cat config/dev.tfvars
@@ -140,6 +141,15 @@ resource "aws_xx_xxxx" "main" {
   subnet_ids = "${split(",", data.terraform_remote_state.vpc.data_subnets)}"
   vpc_id     = "${data.terraform_remote_state.vpc.vpc_id}"
 }
+```
+
+## Turn on debug when you need do troubleshooting.
+
+```
+TF_LOG=DEBUG terraform <command>
+
+# or if you run with terragrunt
+TF_LOG=DEBUG terragrunt <command>
 ```
 
 ## Use shared modules
