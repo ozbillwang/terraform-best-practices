@@ -249,6 +249,8 @@ If you'd like to manage terraform state bucket as well, I recommend using this r
 
 ## Generate README for each module with input and output variables
 
+>Currently terraform-docs doesn't support terraform 0.12, follow this issue (https://github.com/segmentio/terraform-docs/issues/62) for updating.
+
 You needn't manually manage `USAGE` about input variables and outputs. [terraform-docs](https://github.com/segmentio/terraform-docs) can do this job automatically.
 
 ```
