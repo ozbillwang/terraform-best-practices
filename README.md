@@ -127,6 +127,8 @@ So if you followed the setting in terragrunt properly, you don't need to care ab
 
 Normally we have several layers to manage terraform resources, such as network, database, application layers. After you create the basic network resources, such as vpc, security group, subnets, nat gateway in vpc stack. Your database layer and applications layer should always refer the resource from vpc layer directly via `terraform_remote_state` data srouce. 
 
+>Notes: in Terraform v0.12+, you need add extra `outputs` to reference the attributes, otherwise you will get error message of [Unsupported attribute](https://github.com/terraform-providers/terraform-provider-aws/issues/8586)
+
 ```
 data "terraform_remote_state" "vpc" {
   backend = "s3"
@@ -141,7 +143,7 @@ data "terraform_remote_state" "vpc" {
 resource "aws_xx_xxxx" "main" {
   # ...
   subnet_ids = split(",", data.terraform_remote_state.vpc.data_subnets)
-  vpc_id     = data.terraform_remote_state.vpc.vpc_id
+  vpc_id     = data.terraform_remote_state.vpc.outputs.vpc_id
 }
 ```
 
