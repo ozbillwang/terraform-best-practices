@@ -243,6 +243,10 @@ I used below code in Travis CI pipeline (you can re-use it in any pipelines) to 
       - terraform validate
       - terraform fmt -check=true -write=false -diff=true
 
+One more check [tflint](https://github.com/wata727/tflint)  you can add
+
+      - docker run --rm -v $(pwd):/data -t wata727/tflint
+
 ## Enable version control on terraform state files bucket
 
 Always set backend to s3 and enable version control on this bucket. 
