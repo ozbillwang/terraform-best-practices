@@ -255,17 +255,21 @@ If you'd like to manage terraform state bucket as well, I recommend using this r
 
 ## Generate README for each module with input and output variables
 
->Currently terraform-docs doesn't support terraform 0.12, follow this issue (https://github.com/segmentio/terraform-docs/issues/62) for updating.
+You needn't manually manage `USAGE` about input variables and outputs. A tool named `terraform-docs` can do the job for you.
 
-You needn't manually manage `USAGE` about input variables and outputs. [terraform-docs](https://github.com/segmentio/terraform-docs) can do this job automatically.
+>Currently original terraform-docs doesn't support terraform 0.12+, follow this issue (https://github.com/segmentio/terraform-docs/issues/62) for updating.
+
+Now we have a work around.
 
 ```
-$ brew install terraform-docs
-$ cd terraform/modules/vpc
-$ terraform-docs md . > README.md
+# [Terraform >= 0.12]
+docker run --rm \
+  -v $(pwd):/data \
+  cytopia/terraform-docs \
+  terraform-docs-012 --sort-inputs-by-required terraform-docs --with-aggregate-type-defaults md . > README.md
 ```
 
-For details on how to run `terraform-docs`, check this repository: https://github.com/segmentio/terraform-docs
+For details on how to run `terraform-docs`, check this repository: https://github.com/cytopia/docker-terraform-docs
 
 There is a simple sample for you to start [tf_aws_acme](https://github.com/BWITS/tf_aws_acme), the README is generatd by `terraform-docs`
 
