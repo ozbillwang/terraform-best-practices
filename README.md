@@ -266,7 +266,7 @@ Now we have a work around.
 docker run --rm \
   -v $(pwd):/data \
   cytopia/terraform-docs \
-  terraform-docs-012 --sort-inputs-by-required terraform-docs --with-aggregate-type-defaults md . > README.md
+  terraform-docs-012 --sort-inputs-by-required --with-aggregate-type-defaults md . > README.md
 ```
 
 For details on how to run `terraform-docs`, check this repository: https://github.com/cytopia/docker-terraform-docs
