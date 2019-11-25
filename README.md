@@ -466,18 +466,6 @@ Then here are extra tips for you.
 * upgrade to terraform 0.11 first, if you have any.
 * upgrade terraform moudles to 0.12 first, because terraform 0.12 can't work with 0.11 modules.
 * define `type` for each variable, otherwise you will get weird error messages.
-* Add aws provider, otherwise, you can't pass the validate check.
-
-```
-variable "region" {
-  description = "region"
-  type        = string
-  default     = "us-east-2"
-}
-
-provider "aws" {
-  region = var.region
-}
 ```
  
 ## Useful documents you should read
