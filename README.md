@@ -245,7 +245,7 @@ I used below code in Travis CI pipeline (you can re-use it in any pipelines) to 
 
 One more check [tflint](https://github.com/wata727/tflint)  you can add
 
-      - docker run --rm -v $(pwd):/data -t wata727/tflint
+      - find . -type f -name "*.tf" -exec dirname {} \;|sort -u |while read line; do pushd $line; docker run --rm -v $(pwd):/data -t wata727/tflint; popd; done
 
 ## Enable version control on terraform state files bucket
 
