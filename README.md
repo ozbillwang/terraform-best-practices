@@ -34,6 +34,6 @@ With `var-file`, you avoid running terraform with long list of key-value pairs (
 
 Terraform doesn't support [Interpolated variables in terraform backend config](https://github.com/hashicorp/terraform/pull/12067), normally you write a seperate script to define a backend storage name for different environments, but I recommend to hard code it.
 
-* [Remote Backend - AWS S3](aws/README#manage-s3-backend-for-tfstate-files)
-* [Remote Backend - Azure Blob Storage](azure/README#manage-blob-storage-backend-for-tfstate-files)
+* [Remote Backend - AWS S3](aws/README.me#manage-s3-backend-for-tfstate-files)
+* [Remote Backend - Azure Blob Storage](azure/README.md#manage-blob-storage-backend-for-tfstate-files)
 
