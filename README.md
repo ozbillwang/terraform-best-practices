@@ -37,7 +37,7 @@ Terraform Best Practices for AWS users.
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
->the READM for terraform version 0.11 and less has been renamed to [README.0.11.md](README.0.11.md)
+>the README for terraform version 0.11 and less has been renamed to [README.0.11.md](README.0.11.md)
 
 ## Run terraform command with var-file
 
