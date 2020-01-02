@@ -48,6 +48,7 @@ resource "aws_lambda_function" "source" {
   handler          = "main.handler"
   runtime          = "python2.7"
   timeout          = 120
+  publish          = true
 
   environment {
     variables = {
