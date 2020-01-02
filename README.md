@@ -179,18 +179,19 @@ Sometimes, developers like to create a security group and share it to all non-pr
 ```
 variable "application" {
   description = "application name"
-  default = "<replace_with_your_project_or_application_name>"
+  default = "<replace_with_your_project_or_application_name, use short name if possible, because some resources has length limit on its name>"
 }
 
 variable "environment" {
   description = "environment name"
+  default = "<replace_with_environment_name, such as dev, svt, prod,etc. Use short name if possible, because some resources has length limit on its name>
 }
 
 locals {
   name_prefix    = "${var.application}-${var.environment}"
 }
 
-resource "<any_resource>" {
+resource "<any_resource>" "custom_resource_name" {
   name = "${local.name_prefix}-<resource_name>"
   ...
 }
