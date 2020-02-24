@@ -12,6 +12,7 @@ Terraform Best Practices for Cloud users.
 - [Run terraform command with var-file](#run-terraform-command-with-var-file)
 - [Manage remote backend for tfstate files](#manage-remote-backend-for-tfstate-files)
 - [Manage multiple Terraform modules and environments easily with Terragrunt](#manage-multiple-terraform-modules-and-environments-easily-with-terragrunt)
+- [Visualize Tf resource configuration or execution plan using the Tf Graph](#visualize-tf-resource-configuration-or-execution-plan-using-the-tf-graph)
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 >the READM for terraform version 0.11 and less has been renamed to [README.0.11.md](README.0.11.md)
@@ -45,4 +46,6 @@ Terragrunt is a thin wrapper for Terraform that provides extra tools for working
 - [Terragrunt - AWS QuickStart](aws/README.md#manage-multiple-terraform-modules-and-environments-easily-with-terragrunt)
 - Terragrunt - Azure QuickStart - Coming Soon
 
+## Visualize Tf resource configuration or execution plan using the Tf Graph
 
+the Graph is great tool to visualize resource dependencies especially useful for complex Tf configurations -  [get started here](./azure/GraphTypePlan.md)

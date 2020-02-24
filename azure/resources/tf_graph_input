@@ -1,0 +1,38 @@
+digraph {
+        compound = "true"
+        newrank = "true"
+        subgraph "root" {
+                "[root] azuread_application.example" [label = "azuread_application.example", shape = "box", fontcolor = "red"]
+                "[root] azuread_service_principal.example" [label = "azuread_service_principal.example", shape = "box", fontcolor = "red"]  
+                "[root] azuread_service_principal_password.example" [label = "azuread_service_principal_password.example", shape = "box", fontcolor = "red"]
+                "[root] output.client_id" [label = "output.client_id", shape = "note"]
+                "[root] output.client_secret" [label = "output.client_secret", shape = "note"]
+                "[root] output.display_name" [label = "output.display_name", shape = "note"]
+                "[root] output.sp_object_id" [label = "output.sp_object_id", shape = "note"]
+                "[root] provider.azuread" [label = "provider.azuread", shape = "diamond"]
+                "[root] provider.random" [label = "provider.random", shape = "diamond"]
+                "[root] random_id.app_name" [label = "random_id.app_name", shape = "box"]
+                "[root] random_password.password" [label = "random_password.password", shape = "box"]
+                "[root] azuread_application.example" -> "[root] provider.azuread"
+                "[root] azuread_application.example" -> "[root] random_id.app_name"
+                "[root] azuread_service_principal.example" -> "[root] azuread_application.example"
+                "[root] azuread_service_principal_password.example" -> "[root] azuread_service_principal.example"    
+                "[root] azuread_service_principal_password.example" -> "[root] random_password.password"
+                "[root] meta.count-boundary (EachMode fixup)" -> "[root] output.client_id"
+                "[root] meta.count-boundary (EachMode fixup)" -> "[root] output.client_secret"
+                "[root] meta.count-boundary (EachMode fixup)" -> "[root] output.display_name"
+                "[root] meta.count-boundary (EachMode fixup)" -> "[root] output.sp_object_id"
+                "[root] output.client_id" -> "[root] azuread_application.example"
+                "[root] output.client_secret" -> "[root] azuread_service_principal_password.example"
+                "[root] output.display_name" -> "[root] azuread_service_principal.example"
+                "[root] output.sp_object_id" -> "[root] azuread_service_principal.example"
+                "[root] provider.azuread (close)" -> "[root] azuread_service_principal_password.example"
+                "[root] provider.random (close)" -> "[root] random_id.app_name"
+                "[root] provider.random (close)" -> "[root] random_password.password"
+                "[root] random_id.app_name" -> "[root] provider.random"
+                "[root] random_password.password" -> "[root] provider.random"
+                "[root] root" -> "[root] meta.count-boundary (EachMode fixup)"
+                "[root] root" -> "[root] provider.azuread (close)"
+                "[root] root" -> "[root] provider.random (close)"
+        }
+}
