@@ -5,16 +5,15 @@ Terraform Best Practices for AWS users.
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-**Table of Contents**
+## Index
 
 - [Run terraform command with var-file](#run-terraform-command-with-var-file)
-- [Manage s3 backend for tfstate files](#manage-s3-backend-for-tfstate-files)
-  - [Notes](#notes)
+- [Manage S3 backend for tfstate files](#manage-s3-backend-for-tfstate-files)
+  - [Notes on S3](#notes-on-s3)
 - [Manage multiple Terraform modules and environments easily with Terragrunt](#manage-multiple-terraform-modules-and-environments-easily-with-terragrunt)
 - [Retrieve state meta data from a remote backend](#retrieve-state-meta-data-from-a-remote-backend)
-- [Turn on debug when you need do troubleshooting.](#turn-on-debug-when-you-need-do-troubleshooting)
+- [Turn on debug when you need do troubleshooting](#turn-on-debug-when-you-need-do-troubleshooting)
 - [Use shared modules](#use-shared-modules)
-  - [Notes](#notes-1)
 - [Isolate environment](#isolate-environment)
 - [Use terraform import to include as many resources you can](#use-terraform-import-to-include-as-many-resources-you-can)
 - [Avoid hard coding the resources](#avoid-hard-coding-the-resources)
@@ -29,8 +28,7 @@ Terraform Best Practices for AWS users.
 - [Minimum AWS permissions necessary for a Terraform run](#minimum-aws-permissions-necessary-for-a-terraform-run)
 - [Tips to deal with lambda functions](#tips-to-deal-with-lambda-functions)
   - [explanation](#explanation)
-  - [Notes](#notes-2)
-- [usage of variable "self"](#usage-of-variable-self)
+- [Usage of variable "self"](#usage-of-variable-self)
   - [One more use case](#one-more-use-case)
 - [Use pre-installed Terraform plugins](#use-pre-installed-terraform-plugins)
 - [Tips to upgrade to terraform 0.12](#tips-to-upgrade-to-terraform-012)
@@ -56,7 +54,7 @@ With `var-file`, you can easily manage environment (dev/stag/uat/prod) variables
 
 With `var-file`, you avoid running terraform with long list of key-value pairs ( `-var foo=bar` )
 
-## Manage s3 backend for tfstate files
+## Manage S3 backend for tfstate files
 
 Terraform doesn't support [Interpolated variables in terraform backend config](https://github.com/hashicorp/terraform/pull/12067), normally you write a seperate script to define s3 backend bucket name for different environments, but I recommend to hard code it directly as below
 
@@ -86,11 +84,11 @@ kms_key_id = "alias/terraform"
 dynamodb_table = "terraform-lock"
 ```
 
-### Notes
+### Notes on S3
 
-- bucket - s3 bucket name, has to be globally unique.
-- key - Set some meaningful names for different services and applications, such as vpc.tfstate, application_name.tfstate, etc
-- dynamodb_table - optional when you want to enable [State Locking](https://www.terraform.io/docs/state/locking.html)
+- `bucket` - s3 bucket name, has to be globally unique.
+- `key` - Set some meaningful names for different services and applications, such as vpc.tfstate, application_name.tfstate, etc
+- `dynamodb_table` - optional when you want to enable [State Locking](https://www.terraform.io/docs/state/locking.html)
 
 After you set `config/backend-dev.conf` and `config/dev.tfvars` properly (for each environment). You can easily run terraform as below:
 
