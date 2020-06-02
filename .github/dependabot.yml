@@ -1,0 +1,17 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: "/lambda/source"
+  schedule:
+    interval: daily
+    time: '08:00'
+  open-pull-requests-limit: 99
+  allow:
+  - dependency-type: direct
+  - dependency-type: indirect
+- package-ecosystem: terraform
+  directory: "/lambda"
+  schedule:
+    interval: daily
+    time: '08:00'
+  open-pull-requests-limit: 99
