@@ -5,6 +5,10 @@ Terraform Best Practices for AWS users.
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+## Any questions or suggestion?
+
+Raise issues for asking help.
+
 ## Index
 
 - [Run terraform command with var-file](#run-terraform-command-with-var-file)
