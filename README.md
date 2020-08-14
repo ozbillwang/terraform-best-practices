@@ -173,7 +173,9 @@ You can start from below links:
 
 - [Terraform aws modules](https://github.com/terraform-aws-modules)
 
-> Terraform modules don't support `count` parameter currently. You can follow up this ticket for updates: <https://github.com/hashicorp/terraform/issues/953>
+> Up to Terraform 0.12, Terraform modules didn't support `count` parameter.
+>
+> From Terraform 0.13 on this feature is already available for your pleasure!
 
 ## Isolate environment
 
