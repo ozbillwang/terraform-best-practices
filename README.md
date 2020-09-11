@@ -68,8 +68,6 @@ Add below code in terraform configuration files.
 $ cat main.tf
 
 terraform {
-  required_version = "~> 0.12"
-
   backend "s3" {
     encrypt = true
   }
