@@ -78,11 +78,10 @@ Define backend variables for particular environment
 
 ```bash
 $ cat config/backend-dev.conf
-bucket  = "<unique_bucket_name>-terraform-development"
-key     = "development/service-1.tfstate"
+bucket  = "<unique_bucket_name>-terraform-state"
+key     = "development/service-name.tfstate"
 encrypt = true
 region  = "ap-southeast-2"
-kms_key_id = "alias/terraform"
 dynamodb_table = "terraform-lock"
 ```
 
