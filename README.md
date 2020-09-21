@@ -12,6 +12,7 @@ Raise issues for asking help.
 ## Index
 
 - [Run terraform command with var-file](#run-terraform-command-with-var-file)
+- [Enable version control on terraform state files bucket](#enable-version-control-on-terraform-state-files-bucket)
 - [Manage S3 backend for tfstate files](#manage-s3-backend-for-tfstate-files)
   - [Notes on S3](#notes-on-s3)
 - [Manage multiple Terraform modules and environments easily with Terragrunt](#manage-multiple-terraform-modules-and-environments-easily-with-terragrunt)
@@ -22,7 +23,6 @@ Raise issues for asking help.
 - [Use terraform import to include as many resources you can](#use-terraform-import-to-include-as-many-resources-you-can)
 - [Avoid hard coding the resources](#avoid-hard-coding-the-resources)
 - [validate and format terraform code](#validate-and-format-terraform-code)
-- [Enable version control on terraform state files bucket](#enable-version-control-on-terraform-state-files-bucket)
 - [Generate README for each module with input and output variables](#generate-readme-for-each-module-with-input-and-output-variables)
 - [Update terraform version](#update-terraform-version)
 - [Run terraform in docker container](#run-terraform-in-docker-container)
@@ -58,6 +58,12 @@ With `var-file`, you can easily manage environment (dev/stag/uat/prod) variables
 
 With `var-file`, you avoid running terraform with long list of key-value pairs ( `-var foo=bar` )
 
+## Enable version control on terraform state files bucket
+
+Always set backend to s3 and enable version control on this bucket.
+
+[s3-backend](s3-backend) to create s3 bucket and dynamodb table to use as terraform backend.
+
 ## Manage S3 backend for tfstate files
 
 Terraform doesn't support [Interpolated variables in terraform backend config](https://github.com/hashicorp/terraform/pull/12067), normally you write a seperate script to define s3 backend bucket name for different environments, but I recommend to hard code it directly as below. This way is called as [partial configuration](https://www.terraform.io/docs/backends/config.html#partial-configuration)
@@ -78,7 +84,7 @@ Define backend variables for particular environment
 
 ```bash
 $ cat config/backend-dev.conf
-bucket  = "<unique_bucket_name>-terraform-state"
+bucket  = "<unique_bucket_name>-terraform-states"
 key     = "development/service-name.tfstate"
 encrypt = true
 region  = "ap-southeast-2"
@@ -257,12 +263,6 @@ One more check [tflint](https://github.com/wata727/tflint) you can add
 ```yml
 - find . -type f -name "*.tf" -exec dirname {} \;|sort -u |while read line; do pushd $line; docker run --rm -v $(pwd):/data -t wata727/tflint; popd; done
 ```
-
-## Enable version control on terraform state files bucket
-
-Always set backend to s3 and enable version control on this bucket.
-
-If you'd like to manage terraform state bucket as well, I recommend using this repostory I wrote [tf_aws_tfstate_bucket](https://github.com/BWITS/tf_aws_tfstate_bucket) to create the bucket and replicate to other regions automatically.
 
 ## Generate README for each module with input and output variables
 
