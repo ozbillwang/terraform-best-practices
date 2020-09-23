@@ -491,7 +491,7 @@ Then here are extra tips for you.
 
 In fact the command `terraform 0.13upgrade` in terraform v0.13.3 (the latest version currently) doesn't work to convert older versions less than v0.11
 
-So you have to download terraform 0.12 version to do the upgrade if you have old version codes. But from hashicorp terraform website, you can't download the older versions now
+So you have to download terraform 0.12 version to do the upgrade. But from hashicorp terraform website, there is only v0.13.x for downloading now.
 
 Here is a simple way if you can run with docker
 
