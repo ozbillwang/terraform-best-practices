@@ -500,6 +500,7 @@ Here is a simple way if you can run with docker
 
 # do the upgrade with terraform 0.12
 $ docker run -ti --rm -v $(pwd):/apps -w /apps --entrypoint=sh hashicorp/terraform:0.12.29
+/apps # terraform init
 /apps # terraform 0.12upgrade -yes
 /apps # exit
 
