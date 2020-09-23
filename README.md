@@ -36,6 +36,7 @@ Raise issues for asking help.
   - [One more use case](#one-more-use-case)
 - [Use pre-installed Terraform plugins](#use-pre-installed-terraform-plugins)
 - [Tips to upgrade to terraform 0.12](#tips-to-upgrade-to-terraform-012)
+- [Tips to upgrade to terraform 0.13](#tips-to-upgrade-to-terraform-013)
 - [Useful documents you should read](#useful-documents-you-should-read)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -469,6 +470,10 @@ There is a way to use pre-installed Terraform plugins instead of downloading the
 
 ## Tips to upgrade to terraform 0.12
 
+```
+terraform 0.12upgrade
+```
+
 If you have any codes older than 0.12, please go through official documents first,
 
 - [terraform Input Variables](https://www.terraform.io/docs/configuration/variables.html), a lot of new features you have to know.
@@ -481,6 +486,27 @@ Then here are extra tips for you.
 - Upgrade to terraform 0.11 first, if you have any.
 - Upgrade terraform moudles to 0.12 first, because terraform 0.12 can't work with 0.11 modules.
 - Define `type` for each variable, otherwise you will get weird error messages.
+
+## Tips to upgrade to terraform 0.13
+
+In fact the command `terraform 0.13upgrade` in terraform v0.13.3 (the latest version currently) doesn't work.
+
+So you have to download terraform 0.12 version to do the upgrade if you have old version codes. But from hashicorp terraform website, you can't download the older versions now
+
+Here is a simple way if you can run with docker
+
+```
+# cd to the terraform tf files folder, run below commands
+
+# do the upgrade with terraform 0.12
+$ docker run -ti --rm -v $(pwd):/apps -w /apps --entrypoint=sh hashicorp/terraform:0.12.29
+/apps # terraform 0.12upgrade -yes
+/apps # exit
+
+# double check with 0.13upgrade
+$ terraform 0.13upgrade -yes
+$
+```
 
 ## Useful documents you should read
 
