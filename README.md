@@ -498,7 +498,7 @@ Here is a simple way if you can run with docker
 ```
 # cd to the terraform tf files folder, run below commands
 
-# do the upgrade with terraform 0.12
+# do the upgrade within terraform 0.12 container
 $ docker run -ti --rm -v $(pwd):/apps -w /apps --entrypoint=sh hashicorp/terraform:0.12.29
 /apps # terraform init
 /apps # terraform 0.12upgrade -yes
