@@ -37,7 +37,6 @@ Raise issues for asking help.
 - [Use pre-installed Terraform plugins](#use-pre-installed-terraform-plugins)
 - [Tips to upgrade to terraform 0.12](#tips-to-upgrade-to-terraform-012)
 - [Tips to upgrade to terraform 0.13](#tips-to-upgrade-to-terraform-013)
-- [Useful documents you should read](#useful-documents-you-should-read)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -508,7 +507,3 @@ $ docker run -ti --rm -v $(pwd):/apps -w /apps --entrypoint=sh hashicorp/terrafo
 $ terraform 0.13upgrade -yes
 $
 ```
-
-## Useful documents you should read
-
-[terraform tips & tricks: loops, if-statements, and gotchas](https://blog.gruntwork.io/terraform-tips-tricks-loops-if-statements-and-gotchas-f739bbae55f9)
