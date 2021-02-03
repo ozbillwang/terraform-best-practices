@@ -192,7 +192,7 @@ variable "application" {
 
 variable "environment" {
   description = "environment name"
-  default = "<replace_with_environment_name, such as dev, svt, prod,etc. Use short name if possible, because some resources have length limit on its name>
+  default = "<replace_with_environment_name, such as dev, svt, prod,etc. Use short name if possible, because some resources have length limit on its name>"
 }
 
 locals {
