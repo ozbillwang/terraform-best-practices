@@ -106,6 +106,11 @@ terraform init -backend-config=config/backend-${env}.conf
 terraform plan -var-file=config/${env}.tfvars
 terraform apply -var-file=config/${env}.tfvars
 ```
+If you encountered any unexpected issues, try delete the cache folder
+```
+rm -rf .terraform
+```
+
 
 ## Manage multiple Terraform modules and environments easily with Terragrunt
 
