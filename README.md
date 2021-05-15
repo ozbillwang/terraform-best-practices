@@ -512,7 +512,7 @@ $
 
 * Update [README.md](README.md)
 * install [doctoc](https://github.com/thlorenz/doctoc)
-* update REAMDE
+* update README
 
 ```
 doctoc --github README.md
