@@ -31,6 +31,7 @@ Terraform Best Practices for AWS users.
 - [Use pre-installed Terraform plugins](#use-pre-installed-terraform-plugins)
 - [Tips to upgrade to terraform 0.12](#tips-to-upgrade-to-terraform-012)
 - [Tips to upgrade to terraform 0.13+](#tips-to-upgrade-to-terraform-013)
+  - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
