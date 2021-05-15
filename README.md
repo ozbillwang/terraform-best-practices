@@ -5,12 +5,6 @@ Terraform Best Practices for AWS users.
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-## Any questions or suggestion?
-
-Raise issues for asking help.
-
-## Index
-
 - [Run terraform command with var-file](#run-terraform-command-with-var-file)
 - [Enable version control on terraform state files bucket](#enable-version-control-on-terraform-state-files-bucket)
 - [Manage S3 backend for tfstate files](#manage-s3-backend-for-tfstate-files)
@@ -36,7 +30,7 @@ Raise issues for asking help.
   - [One more use case](#one-more-use-case)
 - [Use pre-installed Terraform plugins](#use-pre-installed-terraform-plugins)
 - [Tips to upgrade to terraform 0.12](#tips-to-upgrade-to-terraform-012)
-- [Tips to upgrade to terraform 0.13](#tips-to-upgrade-to-terraform-013)
+- [Tips to upgrade to terraform 0.13+](#tips-to-upgrade-to-terraform-013)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -491,7 +485,7 @@ Then here are extra tips for you.
 - Upgrade terraform moudles to 0.12 first, because terraform 0.12 can't work with 0.11 modules.
 - Define `type` for each variable, otherwise you will get weird error messages.
 
-## Tips to upgrade to terraform 0.13
+## Tips to upgrade to terraform 0.13+
 
 In fact the command `terraform 0.13upgrade` in terraform v0.13.3 (the latest version currently) doesn't work to convert older versions less than v0.11
 
@@ -512,3 +506,14 @@ $ docker run -ti --rm -v $(pwd):/apps -w /apps --entrypoint=sh hashicorp/terrafo
 $ terraform 0.13upgrade -yes
 $
 ```
+
+### Contributing
+
+* Update [README.md](README.md)
+* install [doctoc](https://github.com/thlorenz/doctoc)
+* update REAMDE
+
+```
+doctoc --github README.md
+```
+* commit the update and raise pull request for reviewing.
