@@ -5,33 +5,33 @@ Terraform Best Practices for AWS users.
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Run terraform command with var-file](#run-terraform-command-with-var-file)
-- [Enable version control on terraform state files bucket](#enable-version-control-on-terraform-state-files-bucket)
-- [Manage S3 backend for tfstate files](#manage-s3-backend-for-tfstate-files)
-  - [Notes on S3](#notes-on-s3)
-- [Manage multiple Terraform modules and environments easily with Terragrunt](#manage-multiple-terraform-modules-and-environments-easily-with-terragrunt)
-- [Retrieve state meta data from a remote backend](#retrieve-state-meta-data-from-a-remote-backend)
-- [Turn on debug when you need do troubleshooting](#turn-on-debug-when-you-need-do-troubleshooting)
-- [Use shared modules](#use-shared-modules)
-- [Isolate environment](#isolate-environment)
-- [Use terraform import to include as many resources you can](#use-terraform-import-to-include-as-many-resources-you-can)
-- [Avoid hard coding the resources](#avoid-hard-coding-the-resources)
-- [validate and format terraform code](#validate-and-format-terraform-code)
-- [Generate README for each module with input and output variables](#generate-readme-for-each-module-with-input-and-output-variables)
-- [Update terraform version](#update-terraform-version)
-- [Run terraform in docker container](#run-terraform-in-docker-container)
-- [Run test](#run-test)
-  - [Quick start](#quick-start)
-  - [Run test within docker container](#run-test-within-docker-container)
-- [Minimum AWS permissions necessary for a Terraform run](#minimum-aws-permissions-necessary-for-a-terraform-run)
-- [Tips to deal with lambda functions](#tips-to-deal-with-lambda-functions)
-  - [explanation](#explanation)
-- [Usage of variable "self"](#usage-of-variable-self)
-  - [One more use case](#one-more-use-case)
-- [Use pre-installed Terraform plugins](#use-pre-installed-terraform-plugins)
-- [Tips to upgrade to terraform 0.12](#tips-to-upgrade-to-terraform-012)
-- [Tips to upgrade to terraform 0.13+](#tips-to-upgrade-to-terraform-013)
-  - [Contributing](#contributing)
+  - [Run terraform command with var-file](#run-terraform-command-with-var-file)
+  - [Enable version control on terraform state files bucket](#enable-version-control-on-terraform-state-files-bucket)
+  - [Manage S3 backend for tfstate files](#manage-s3-backend-for-tfstate-files)
+    - [Notes on S3](#notes-on-s3)
+  - [Manage multiple Terraform modules and environments easily with Terragrunt](#manage-multiple-terraform-modules-and-environments-easily-with-terragrunt)
+  - [Retrieve state meta data from a remote backend](#retrieve-state-meta-data-from-a-remote-backend)
+  - [Turn on debug when you need do troubleshooting](#turn-on-debug-when-you-need-do-troubleshooting)
+  - [Use shared modules](#use-shared-modules)
+  - [Isolate environment](#isolate-environment)
+  - [Use terraform import to include as many resources you can](#use-terraform-import-to-include-as-many-resources-you-can)
+  - [Avoid hard coding the resources](#avoid-hard-coding-the-resources)
+  - [validate and format terraform code](#validate-and-format-terraform-code)
+  - [Generate README for each module with input and output variables](#generate-readme-for-each-module-with-input-and-output-variables)
+  - [Update terraform version](#update-terraform-version)
+  - [Run terraform in docker container](#run-terraform-in-docker-container)
+  - [Run test](#run-test)
+    - [Quick start](#quick-start)
+    - [Run test within docker container](#run-test-within-docker-container)
+  - [Minimum AWS permissions necessary for a Terraform run](#minimum-aws-permissions-necessary-for-a-terraform-run)
+  - [Tips to deal with lambda functions](#tips-to-deal-with-lambda-functions)
+    - [explanation](#explanation)
+  - [Usage of variable "self"](#usage-of-variable-self)
+    - [One more use case](#one-more-use-case)
+  - [Use pre-installed Terraform plugins](#use-pre-installed-terraform-plugins)
+  - [Tips to upgrade to terraform 0.12](#tips-to-upgrade-to-terraform-012)
+  - [Tips to upgrade to terraform 0.13+](#tips-to-upgrade-to-terraform-013)
+- [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -508,7 +508,7 @@ $ terraform 0.13upgrade -yes
 $
 ```
 
-### Contributing
+# Contributing
 
 * Update [README.md](README.md)
 * install [doctoc](https://github.com/thlorenz/doctoc)
