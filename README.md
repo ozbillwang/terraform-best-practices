@@ -512,6 +512,11 @@ $
 
 * Update [README.md](README.md)
 * install [doctoc](https://github.com/thlorenz/doctoc)
+
+```
+npm install -g doctoc
+```
+
 * update README
 
 ```
