@@ -541,6 +541,6 @@ output "id" {
     value = module.helper.ami_id
 }
 
-reference: https://github.com/recarnot/terraform-aws-ami-helper
+reference: [recarnot/terraform-aws-ami-helper](https://github.com/recarnot/terraform-aws-ami-helper)
 
 
