@@ -32,6 +32,7 @@ Terraform Best Practices for AWS users.
   - [Tips to upgrade to terraform 0.12](#tips-to-upgrade-to-terraform-012)
   - [Tips to upgrade to terraform 0.13+](#tips-to-upgrade-to-terraform-013)
 - [Contributing](#contributing)
+- [useful terraform modules](#useful-terraform-modules)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -523,3 +524,23 @@ npm install -g doctoc
 doctoc --github README.md
 ```
 * commit the update and raise pull request for reviewing.
+
+# useful terraform modules 
+
+
+1. terraform aws ami helper
+
+usage module to easly find some useful AWS ami id, here is a sample to get latest amazon linux 2 ami id
+```
+module "helper" {
+  source  = "recarnot/ami-helper/aws"
+  os      = module.helper.AMAZON_LINUX_2
+}
+
+output "id" {
+    value = module.helper.ami_id
+}
+
+reference: https://github.com/recarnot/terraform-aws-ami-helper
+
+
