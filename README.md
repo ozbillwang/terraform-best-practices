@@ -256,7 +256,7 @@ I used below code in Travis CI pipeline (you can re-use it in any pipelines) to 
 script:
   - terraform validate
   - terraform fmt -check=true -write=false -diff=true
-  terraform
+  - <rest terraform commands>
 ```
 
 One more check [tflint](https://github.com/wata727/tflint) you can add
