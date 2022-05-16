@@ -84,7 +84,7 @@ bucket  = "<account_id>-terraform-states"
 key     = "development/service-name.tfstate"
 encrypt = true
 region  = "ap-southeast-2"
-dynamodb_table = "terraform-lock"
+#dynamodb_table = "terraform-lock"
 ```
 
 ### Notes on S3
