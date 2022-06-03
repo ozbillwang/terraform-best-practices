@@ -19,6 +19,7 @@ Terraform Best Practices for AWS users.
   - [validate and format terraform code](#validate-and-format-terraform-code)
   - [Generate README for each module with input and output variables](#generate-readme-for-each-module-with-input-and-output-variables)
   - [Update terraform version](#update-terraform-version)
+  - [terraform version manager](#terraform-version-manager)
   - [Run terraform in docker container](#run-terraform-in-docker-container)
   - [Run test](#run-test)
     - [Quick start](#quick-start)
@@ -292,6 +293,29 @@ Hashicorp doesn't have a good qa/build/release process for their software and do
 For example, `terraform init` isn't compatible between 0.9 and 0.8. Now they are going to split providers and use "init" to install providers as plugin in coming version 0.10
 
 So recommend to keep updating to latest terraform version
+
+## terraform version manager
+
+You can manage multiple terraform versions with [tfenv](https://github.com/tfutils/tfenv)
+
+sample commands for mac users.
+
+```
+# install tfenv
+$ brew install tfenv
+
+# install several terraform binary with different versions
+$ tfenv install 1.1.9
+$ tfenv install 1.2.1
+$ tfenv install 0.12.11
+
+# list terraform versions managed by tfenv
+$ terraform list
+
+# set the default terraform version
+$ terraform use 1.2.1
+$ terraform version
+```
 
 ## Run terraform in docker container
 
