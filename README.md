@@ -404,7 +404,7 @@ There will be no answer for this. But with below iam policy you can easily get s
         "budgets:*",
         "config:*",
         "directconnect:*",
-        "aws-marketplace:*",
+        "aws-marketplace:*".
         "aws-marketplace-management:*",
         "ec2:*ReservedInstances*"
       ],
