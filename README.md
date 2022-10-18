@@ -270,12 +270,9 @@ One more check [tflint](https://github.com/wata727/tflint) you can add
 
 You needn't manually manage `USAGE` about input variables and outputs. A tool named `terraform-docs` can do the job for you.
 
-> Currently original terraform-docs doesn't support terraform 0.12+, follow this issue: <https://github.com/segmentio/terraform-docs/issues/62> for updating.
-
-Now we have a work around.
+Sample command with `docker run` (so you don't have to install it directly)
 
 ```bash
-# [Terraform >= 0.12]
 docker run --rm -v $(pwd):/data cytopia/terraform-docs terraform-docs md . > README.md
 ```
 
