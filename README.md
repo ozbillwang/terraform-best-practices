@@ -276,10 +276,7 @@ Now we have a work around.
 
 ```bash
 # [Terraform >= 0.12]
-docker run --rm \
-  -v $(pwd):/data \
-  cytopia/terraform-docs \
-  terraform-docs-012 --sort-inputs-by-required --with-aggregate-type-defaults md . > README.md
+docker run --rm -v $(pwd):/data cytopia/terraform-docs terraform-docs md . > README.md
 ```
 
 For details on how to run `terraform-docs`, check this repository: <https://github.com/cytopia/docker-terraform-docs>
