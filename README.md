@@ -152,7 +152,7 @@ data "terraform_remote_state" "vpc" {
 # Retrieves the vpc_id and subnet_ids directly from remote backend state files.
 resource "aws_xx_xxxx" "main" {
   # ...
-  subnet_ids = split(",", data.terraform_remote_state.vpc.data_subnets)
+  subnet_ids = split(",", data.terraform_remote_state.vpc.outputs.data_subnets)
   vpc_id     = data.terraform_remote_state.vpc.outputs.vpc_id
 }
 ```
