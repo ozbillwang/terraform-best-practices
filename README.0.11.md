@@ -4,18 +4,17 @@ Terraform Best Practices for AWS users.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  
 
 - [Run terraform command with var-file](#run-terraform-command-with-var-file)
 - [Manage s3 backend for tfstate files](#manage-s3-backend-for-tfstate-files)
   - [Notes](#notes)
 - [Manage multiple Terraform modules and environments easily with Terragrunt](#manage-multiple-terraform-modules-and-environments-easily-with-terragrunt)
 - [Retrieve state meta data from a remote backend](#retrieve-state-meta-data-from-a-remote-backend)
-- [Turn on debug when you need do troubleshooting.](#turn-on-debug-when-you-need-do-troubleshooting)
+- [Turn on debug when you need to do troubleshooting.](#turn-on-debug-when-you-need-to-do-troubleshooting)
 - [Use shared modules](#use-shared-modules)
   - [Notes](#notes-1)
 - [Isolate environment](#isolate-environment)
-- [Use terraform import to include as many resources you can](#use-terraform-import-to-include-as-many-resources-you-can)
+- [Use terraform import to include as many resources as you can](#use-terraform-import-to-include-as-many-resources-as-you-can)
 - [Avoid hard coding the resources](#avoid-hard-coding-the-resources)
 - [Format terraform code](#format-terraform-code)
 - [Enable version control on terraform state files bucket](#enable-version-control-on-terraform-state-files-bucket)
@@ -28,9 +27,9 @@ Terraform Best Practices for AWS users.
   - [Run test within docker container](#run-test-within-docker-container)
 - [Minimum AWS permissions necessary for a Terraform run](#minimum-aws-permissions-necessary-for-a-terraform-run)
 - [Tips to deal with lambda functions](#tips-to-deal-with-lambda-functions)
-  - [explanation](#explanation)
+  - [Explanation](#explanation)
   - [Notes](#notes-2)
-- [usage of variable "self"](#usage-of-variable-self)
+- [Usage of variable "self"](#usage-of-variable-self)
   - [One more use case](#one-more-use-case)
 - [Use pre-installed Terraform plugins](#use-pre-installed-terraform-plugins)
 - [Useful documents you should read](#useful-documents-you-should-read)
@@ -45,7 +44,7 @@ $ cat config/dev.tfvars
 name = "dev-stack"
 s3_terraform_bucket = "dev-stack-terraform"
 tag_team_name = "hello-world"
- 
+
 $ terraform plan -var-file=config/dev.tfvars
 ```
 
@@ -55,9 +54,10 @@ With `var-file`, you avoid running terraform with long list of key-value pairs (
 
 ## Manage s3 backend for tfstate files
 
-Terraform doesn't support [Interpolated variables in terraform backend config](https://github.com/hashicorp/terraform/pull/12067), normally you write a seperate script to define s3 backend bucket name for different environments, but I recommend to hard code it directly as below
+Terraform doesn't support [Interpolated variables in terraform backend config](https://github.com/hashicorp/terraform/pull/12067), normally you write a separate script to define s3 backend bucket name for different environments, but I recommend to hard code it directly as below.
 
 Add below code in terraform configuration files.
+
 ```
 $ cat main.tf
 
@@ -71,6 +71,7 @@ terraform {
 ```
 
 Define backend variables for particular environment
+
 ```
 $ cat config/backend-dev.conf
 bucket  = "<unique_bucket_name>-terraform-development"
@@ -89,7 +90,7 @@ dynamodb_table = "terraform-lock"
 
 After you set `config/backend-dev.conf` and `config/dev.tfvars` properly (for each environment). You can easily run terraform as below:
 
-```
+```bash
 env=dev
 terraform get -update=true
 terraform init -backend-config=config/backend-${env}.conf
@@ -105,7 +106,7 @@ Sample for reference: https://github.com/gruntwork-io/terragrunt-infrastructure-
 
 Its README is too long, if you need a quick start, follow below steps:
 
-```
+```bash
 # Install terraform and terragrunt
 # Make sure you are in right aws account
 $ aws s3 ls
@@ -123,9 +124,9 @@ So if you followed the setting in terragrunt properly, you don't need to care ab
 
 ## Retrieve state meta data from a remote backend
 
-Normally we have several layers to manage terraform resources, such as network, database, application layers. After you create the basic network resources, such as vpc, security group, subnets, nat gateway in vpc stack. Your database layer and applications layer should always refer the resource from vpc layer directly via `terraform_remote_state` data srouce. 
+Normally we have several layers to manage terraform resources, such as network, database, and application layers. After you create the basic network resources, such as vpc, security group, subnets, nat gateway in vpc stack. Your database layer and applications layer should always refer the resource from vpc layer directly via `terraform_remote_state` data source.
 
-```
+```terraform
 data "terraform_remote_state" "vpc" {
   backend = "s3"
   config{
@@ -134,7 +135,7 @@ data "terraform_remote_state" "vpc" {
     region="${var.aws_region}"
   }
 }
- 
+
 # Retrieves the vpc_id and subnet_ids directly from remote backend state files.
 resource "aws_xx_xxxx" "main" {
   # ...
@@ -143,9 +144,9 @@ resource "aws_xx_xxxx" "main" {
 }
 ```
 
-## Turn on debug when you need do troubleshooting.
+## Turn on debug when you need to do troubleshooting.
 
-```
+```bash
 TF_LOG=DEBUG terraform <command>
 
 # or if you run with terragrunt
@@ -154,9 +155,9 @@ TF_LOG=DEBUG terragrunt <command>
 
 ## Use shared modules
 
-Manage terraform resource with shared modules, this will save a lot of coding time. No need re-invent the wheel!
+Manage terraform resource with shared modules, this will save a lot of coding time. No need to re-invent the wheel!
 
-You can start from below links: 
+You can start from below links:
 
 [terraform module usage](https://www.terraform.io/docs/modules/usage.html)
 
@@ -172,7 +173,7 @@ terraform modules don't support `count` parameter currently. You can follow up t
 
 Sometimes, developers like to create a security group and share it to all non-prod (dev/qa) environments. Don't do that, create resources with different name for each environment and each resource.
 
-```
+```terraform
 variable "application" {
   description = "application name"
   default = "<replace_with_your_project_or_application_name>"
@@ -188,14 +189,15 @@ locals {
 
 resource "<any_resource>" {
   name = "${local.name_prefix}-<resource_name>"
-  ...
+  # ...
 }
 ```
+
 With that, you will easily define the resource with a meaningful and unique name, and you can build more of the same application stack for different developers without change a lot. For example, you update the environment to dev, staging, uat, prod, etc.
 
->Tips: some aws resource names have length limits, such as less than 24 characters, so when you define variables of application and environment name, use short name.
+> Tips: some aws resource names have length limits, such as less than 24 characters, so when you define variables of application and environment name, use short name.
 
-## Use terraform import to include as many resources you can
+## Use terraform import to include as many resources as you can
 
 Sometimes developers manually created resources. You need to mark these resource and use `terraform import` to include them in codes.
 
@@ -204,16 +206,17 @@ Sometimes developers manually created resources. You need to mark these resource
 ## Avoid hard coding the resources
 
 A sample:
+
 ```
-account_number=“123456789012"
+account_number="123456789012"
 account_alias="mycompany"
 region="us-east-2"
 ```
 
 The current aws account id, account alias and current region can be input directly via [data sources](https://www.terraform.io/docs/providers/aws/).
 
-```
-# The attribute `${data.aws_caller_identity.current.account_id}` will be current account number. 
+```terraform
+# The attribute `${data.aws_caller_identity.current.account_id}` will be current account number.
 data "aws_caller_identity" "current" {}
 
 # The attribue `${data.aws_iam_account_alias.current.account_alias}` will be current account alias
@@ -238,18 +241,18 @@ I used below code in Travis CI pipeline (you can re-use it in any pipelines) to 
 
       - find . -type f -name "*.tf" -exec dirname {} \;|sort -u | while read m; do (terraform validate -check-variables=false "$m" && echo "√ $m") || exit 1 ; done
       - terraform fmt -check=true -write=false -diff=true
-      
+
 ## Enable version control on terraform state files bucket
 
-Always set backend to s3 and enable version control on this bucket. 
+Always set backend to s3 and enable version control on this bucket.
 
-If you'd like to manage terraform state bucket as well, I recommend using this repostory I wrote [tf_aws_tfstate_bucket](https://github.com/BWITS/tf_aws_tfstate_bucket) to create the bucket and replicate to other regions automatically. 
+If you'd like to manage terraform state bucket as well, I recommend using this repostory I wrote [tf_aws_tfstate_bucket](https://github.com/BWITS/tf_aws_tfstate_bucket) to create the bucket and replicate to other regions automatically.
 
 ## Generate README for each module with input and output variables
 
 You needn't manually manage `USAGE` about input variables and outputs. [terraform-docs](https://github.com/segmentio/terraform-docs) can do this job automatically.
 
-```
+```bash
 $ brew install terraform-docs
 $ cd terraform/modules/vpc
 $ terraform-docs md . > README.md
@@ -273,7 +276,7 @@ Terraform releases official docker containers that you can easily control which 
 
 Recommend to run terraform docker container, when you set your build job in CI/CD pipeline.
 
-```
+```bash
 TERRAFORM_IMAGE=hashicorp/terraform:0.9.8
 TERRAFORM_CMD="docker run -ti --rm -w /app -v ${HOME}/.aws:/root/.aws -v ${HOME}/.ssh:/root/.ssh -v `pwd`:/app -w /app ${TERRAFORM_IMAGE}"
 ${TERRAFORM_CMD} init
@@ -281,9 +284,10 @@ ${TERRAFORM_CMD} plan
 ```
 
 ## Troubleshooting with messy output - (Decommissioned)
+
 > (Decommissioned) after terraform v0.12.x, we needn't run with `terraform-landscape` any more. The new terraform output looks nice already.
 
-Sometime, you applied the changes several times, the plan output always prompts there are some changes, essepecially in iam and s3 policy.  It is hard to troubleshooting the problem with messy json output in one line.
+Sometime, you applied the changes several times, the plan output always prompts there are some changes, essepecially in iam and s3 policy. It is hard to troubleshooting the problem with messy json output in one line.
 
 With the tool [terraform-landscape](https://github.com/coinbase/terraform-landscape), it improves Terraform plan output to be easier for reading, you can easily find out where is the problem. For details, please go through the project at https://github.com/coinbase/terraform-landscape
 
@@ -322,65 +326,66 @@ Reference: [README for terraform awspec container](https://github.com/alpine-doc
 ## Minimum AWS permissions necessary for a Terraform run
 
 There will be no answer for this. But with below iam policy you can easily get started.
+
 ```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "AllowSpecifics",
-            "Action": [
-                "lambda:*",
-                "apigateway:*",
-                "ec2:*",
-                "rds:*",
-                "s3:*",
-                "sns:*",
-                "states:*",
-                "ssm:*",
-                "sqs:*",
-                "iam:*",
-                "elasticloadbalancing:*",
-                "autoscaling:*",
-                "cloudwatch:*",
-                "cloudfront:*",
-                "route53:*",
-                "ecr:*",
-                "logs:*",
-                "ecs:*",
-                "application-autoscaling:*",
-                "logs:*",
-                "events:*",
-                "elasticache:*",
-                "es:*",
-                "kms:*",
-                "dynamodb:*"
-            ],
-            "Effect": "Allow",
-            "Resource": "*"
-        },
-        {
-            "Sid": "DenySpecifics",
-            "Action": [
-                "iam:*User*",
-                "iam:*Login*",
-                "iam:*Group*",
-                "iam:*Provider*",
-                "aws-portal:*",
-                "budgets:*",
-                "config:*",
-                "directconnect:*",
-                "aws-marketplace:*",
-                "aws-marketplace-management:*",
-                "ec2:*ReservedInstances*"
-            ],
-            "Effect": "Deny",
-            "Resource": "*"
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowSpecifics",
+      "Action": [
+        "lambda:*",
+        "apigateway:*",
+        "ec2:*",
+        "rds:*",
+        "s3:*",
+        "sns:*",
+        "states:*",
+        "ssm:*",
+        "sqs:*",
+        "iam:*",
+        "elasticloadbalancing:*",
+        "autoscaling:*",
+        "cloudwatch:*",
+        "cloudfront:*",
+        "route53:*",
+        "ecr:*",
+        "logs:*",
+        "ecs:*",
+        "application-autoscaling:*",
+        "logs:*",
+        "events:*",
+        "elasticache:*",
+        "es:*",
+        "kms:*",
+        "dynamodb:*"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenySpecifics",
+      "Action": [
+        "iam:*User*",
+        "iam:*Login*",
+        "iam:*Group*",
+        "iam:*Provider*",
+        "aws-portal:*",
+        "budgets:*",
+        "config:*",
+        "directconnect:*",
+        "aws-marketplace:*",
+        "aws-marketplace-management:*",
+        "ec2:*ReservedInstances*"
+      ],
+      "Effect": "Deny",
+      "Resource": "*"
+    }
+  ]
 }
 ```
 
-Depend on your company or project requirement, you can easily update the resources in `Allow` session which terraform commands should have, and add deny policies in `Deny` session if some of permissions are not required.
+Depending on your company or project requirement, you can easily update the resources in `Allow` section which terraform commands should have, and add deny policies in `Deny` section if some of permissions are not required.
 
 ## Tips to deal with lambda functions
 
@@ -402,7 +407,7 @@ $ tree
 
 Replace `main.py` and `requirements.txt` with your applications.
 
-### explanation
+### Explanation
 
 After you run `terraform apply`, it will:
 
@@ -419,17 +424,19 @@ You should be fine to do the same for lambda functions using nodejs (`npm instal
 
 You need have python/pip installed when run terraform commands, if you run in terraform container, make sure you install python/pip in it.
 
-## usage of variable "self"
+## Usage of variable "self"
 
 Quote from terraform documents:
->Attributes of your own resource
 
->The syntax is self.ATTRIBUTE. For example ${self.private_ip} will interpolate that resource's private IP address.
+> Attributes of your own resource
 
->Note: The self.ATTRIBUTE syntax is only allowed and valid within provisioners.
+> The syntax is self.ATTRIBUTE. For example ${self.private_ip} will interpolate that resource's private IP address.
+
+> Note: The self.ATTRIBUTE syntax is only allowed and valid within provisioners.
 
 ### One more use case
-```
+
+```terraform
 resource "aws_ecr_repository" "jenkins" {
   name = "${var.image_name}"
   provisioner "local-exec" {
@@ -442,6 +449,7 @@ variable "jenkins_image_name" {
   description = "Jenkins image name."
 }
 ```
+
 You can easily define ecr image url (`<account_id>.dkr.ecr.<aws_region>.amazonaws.com/<image_name>`) with ${self.repository_url}
 
 Any attributes in this resource can be self referenced by this way.
