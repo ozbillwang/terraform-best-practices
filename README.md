@@ -11,29 +11,29 @@ Terraform Best Practices for AWS users.
     - [Notes on S3](#notes-on-s3)
   - [Manage multiple Terraform modules and environments easily with Terragrunt](#manage-multiple-terraform-modules-and-environments-easily-with-terragrunt)
   - [Retrieve state meta data from a remote backend](#retrieve-state-meta-data-from-a-remote-backend)
-  - [Turn on debug when you need do troubleshooting](#turn-on-debug-when-you-need-do-troubleshooting)
+  - [Turn on debug when you need to do troubleshooting](#turn-on-debug-when-you-need-to-do-troubleshooting)
   - [Use shared modules](#use-shared-modules)
   - [Isolate environment](#isolate-environment)
-  - [Use terraform import to include as many resources you can](#use-terraform-import-to-include-as-many-resources-you-can)
+  - [Use terraform import to include as many resources as you can](#use-terraform-import-to-include-as-many-resources-as-you-can)
   - [Avoid hard coding the resources](#avoid-hard-coding-the-resources)
-  - [validate and format terraform code](#validate-and-format-terraform-code)
+  - [Validate and format terraform code](#validate-and-format-terraform-code)
   - [Generate README for each module with input and output variables](#generate-readme-for-each-module-with-input-and-output-variables)
   - [Update terraform version](#update-terraform-version)
-  - [terraform version manager](#terraform-version-manager)
+  - [Terraform version manager](#terraform-version-manager)
   - [Run terraform in docker container](#run-terraform-in-docker-container)
   - [Run test](#run-test)
     - [Quick start](#quick-start)
     - [Run test within docker container](#run-test-within-docker-container)
   - [Minimum AWS permissions necessary for a Terraform run](#minimum-aws-permissions-necessary-for-a-terraform-run)
   - [Tips to deal with lambda functions](#tips-to-deal-with-lambda-functions)
-    - [explanation](#explanation)
+    - [Explanation](#explanation)
   - [Usage of variable "self"](#usage-of-variable-self)
     - [One more use case](#one-more-use-case)
   - [Use pre-installed Terraform plugins](#use-pre-installed-terraform-plugins)
   - [Tips to upgrade to terraform 0.12](#tips-to-upgrade-to-terraform-012)
   - [Tips to upgrade to terraform 0.13+](#tips-to-upgrade-to-terraform-013)
 - [Contributing](#contributing)
-- [useful terraform modules](#useful-terraform-modules)
+- [Useful terraform modules](#useful-terraform-modules)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -63,7 +63,7 @@ Always set backend to s3 and enable version control on this bucket.
 
 ## Manage S3 backend for tfstate files
 
-Terraform doesn't support [Interpolated variables in terraform backend config](https://github.com/hashicorp/terraform/pull/12067), normally you write a seperate script to define s3 backend bucket name for different environments, but I recommend to hard code it directly as below. This way is called as [partial configuration](https://www.terraform.io/docs/backends/config.html#partial-configuration)
+Terraform doesn't support [Interpolated variables in terraform backend config](https://github.com/hashicorp/terraform/pull/12067), normally you write a separate script to define s3 backend bucket name for different environments, but I recommend to hard code it directly as below. This way is called [partial configuration](https://www.terraform.io/docs/backends/config.html#partial-configuration).
 
 Add below code in terraform configuration files.
 
@@ -103,11 +103,12 @@ terraform init -reconfigure -backend-config=config/backend-${env}.conf
 terraform plan -var-file=config/${env}.tfvars
 terraform apply -var-file=config/${env}.tfvars
 ```
+
 If you encountered any unexpected issues, delete the cache folder, and try again.
-```
+
+```bash
 rm -rf .terraform
 ```
-
 
 ## Manage multiple Terraform modules and environments easily with Terragrunt
 
@@ -135,7 +136,7 @@ So if you followed the setting in terragrunt properly, you don't need to care ab
 
 ## Retrieve state meta data from a remote backend
 
-Normally we have several layers to manage terraform resources, such as network, database, application layers. After you create the basic network resources, such as vpc, security group, subnets, nat gateway in vpc stack. Your database layer and applications layer should always refer the resource from vpc layer directly via `terraform_remote_state` data source.
+Normally we have several layers to manage terraform resources, such as network, database, and application layers. After you create the basic network resources, such as vpc, security group, subnets, nat gateway in vpc stack. Your database layer and applications layer should always refer the resource from vpc layer directly via `terraform_remote_state` data source.
 
 > Notes: in Terraform v0.12+, you need add extra `outputs` to reference the attributes, otherwise you will get error message of [Unsupported attribute](https://github.com/hashicorp/terraform/issues/21442)
 
@@ -157,9 +158,9 @@ resource "aws_xx_xxxx" "main" {
 }
 ```
 
-## Turn on debug when you need do troubleshooting
+## Turn on debug when you need to do troubleshooting
 
-```terraform
+```bash
 TF_LOG=DEBUG terraform <command>
 
 # or if you run with terragrunt
@@ -168,7 +169,7 @@ TF_LOG=DEBUG terragrunt <command>
 
 ## Use shared modules
 
-Manage terraform resource with shared modules, this will save a lot of coding time. No need re-invent the wheel!
+Manage terraform resource with shared modules, this will save a lot of coding time. No need to re-invent the wheel!
 
 You can start from below links:
 
@@ -203,7 +204,7 @@ locals {
 
 resource "<any_resource>" "custom_resource_name" {
   name = "${local.name_prefix}-<resource_name>"
-  ...
+  # ...
 }
 ```
 
@@ -211,7 +212,7 @@ With that, you will easily define the resource with a meaningful and unique name
 
 > Tips: some aws resource names have length limits, such as less than 24 characters, so when you define variables of application and environment name, use short name.
 
-## Use terraform import to include as many resources you can
+## Use terraform import to include as many resources as you can
 
 Sometimes developers manually created resources. You need to mark these resource and use `terraform import` to include them in codes.
 
@@ -221,8 +222,8 @@ Sometimes developers manually created resources. You need to mark these resource
 
 A sample:
 
-```terraform
-account_number=“123456789012"
+```
+account_number="123456789012"
 account_alias="mycompany"
 region="us-east-2"
 ```
@@ -247,7 +248,7 @@ locals {
 }
 ```
 
-## validate and format terraform code
+## Validate and format terraform code
 
 Always run `terraform fmt` to format terraform configuration files and make them neat.
 
@@ -288,13 +289,13 @@ For example, `terraform init` isn't compatible between 0.9 and 0.8. Now they are
 
 So recommend to keep updating to latest terraform version
 
-## terraform version manager
+## Terraform version manager
 
 You can manage multiple terraform versions with [tfenv](https://github.com/tfutils/tfenv)
 
 sample commands for mac users.
 
-```
+```bash
 # install tfenv
 $ brew install tfenv
 
@@ -317,7 +318,7 @@ Terraform releases official docker containers that you can easily control which 
 
 Recommend to run terraform docker container, when you set your build job in CI/CD pipeline.
 
-```terraform
+```bash
 TERRAFORM_IMAGE=hashicorp/terraform:0.12.3
 TERRAFORM_CMD="docker run -ti --rm -w /app -v ${HOME}/.aws:/root/.aws -v ${HOME}/.ssh:/root/.ssh -v `pwd`:/app -w /app ${TERRAFORM_IMAGE}"
 ${TERRAFORM_CMD} init
@@ -409,7 +410,7 @@ There will be no answer for this. But with below iam policy you can easily get s
 }
 ```
 
-Depend on your company or project requirement, you can easily update the resources in `Allow` session which terraform commands should have, and add deny policies in `Deny` session if some of permissions are not required.
+Depending on your company or project requirement, you can easily update the resources in `Allow` section which terraform commands should have, and add deny policies in `Deny` section if some of the permissions are not required.
 
 ## Tips to deal with lambda functions
 
@@ -431,7 +432,7 @@ $ tree
 
 Replace `main.py` and `requirements.txt` with your applications.
 
-### explanation
+### Explanation
 
 After you run `terraform apply`, it will:
 
@@ -529,27 +530,28 @@ $
 
 # Contributing
 
-* Update [README.md](README.md)
-* install [doctoc](https://github.com/thlorenz/doctoc)
+- Update [README.md](README.md)
+- install [doctoc](https://github.com/thlorenz/doctoc)
 
 ```
 npm install -g doctoc
 ```
 
-* update README
+- update README
 
 ```
 doctoc --github README.md
 ```
-* commit the update and raise pull request for reviewing.
 
-# useful terraform modules 
+- commit the update and raise pull request for reviewing.
 
+# Useful terraform modules
 
 1. terraform aws ami helper
 
 usage module to easly find some useful AWS ami id, here is a sample to get latest amazon linux 2 ami id
-```
+
+```terraform
 module "helper" {
   source  = "recarnot/ami-helper/aws"
   os      = module.helper.AMAZON_LINUX_2
@@ -559,6 +561,5 @@ output "id" {
     value = module.helper.ami_id
 }
 
-reference: [recarnot/terraform-aws-ami-helper](https://github.com/recarnot/terraform-aws-ami-helper)
-
-
+# reference: [recarnot/terraform-aws-ami-helper](https://github.com/recarnot/terraform-aws-ami-helper)
+```
