@@ -134,11 +134,20 @@ $ terragrunt apply
 
 So if you followed the setting in terragrunt properly, you don't need to care about the backend state files and variable file path in different environments, even more, you can run `terragrunt plan-all` to plan all modules together.
 
+## layers
+
+Avoid consolidating everything into a single Terraform module, such as combining network creation with application services. The best practice is to separate them into different modules:
+
+* VPC with subnets, gateways, etc
+* App-1 and related resources
+* App-2 and related resources
+* Database-1
+
 ## Retrieve state meta data from a remote backend
 
-Normally we have several layers to manage terraform resources, such as network, database, and application layers. After you create the basic network resources, such as vpc, security group, subnets, nat gateway in vpc stack. Your database layer and applications layer should always refer the resource from vpc layer directly via `terraform_remote_state` data source.
+Typically, we have several layers for managing Terraform resources, including the network, database, and application layers. Once you've created the essential network resources, like VPC, security groups, subnets, and NAT gateways in the VPC stack, your database and application layers should always reference these resources directly using data source [terraform_remote_state](https://developer.hashicorp.com/terraform/language/state/remote-state-data) .
 
-> Notes: in Terraform v0.12+, you need add extra `outputs` to reference the attributes, otherwise you will get error message of [Unsupported attribute](https://github.com/hashicorp/terraform/issues/21442)
+> Note: Starting from Terraform version 0.12 and beyond, you must include additional outputs to reference the attributes; otherwise, you will receive an error message [Unsupported attribute](https://github.com/hashicorp/terraform/issues/21442)
 
 ```terraform
 data "terraform_remote_state" "vpc" {
@@ -150,7 +159,7 @@ data "terraform_remote_state" "vpc" {
   }
 }
 
-# Retrieves the vpc_id and subnet_ids directly from remote backend state files.
+# Retrieves the vpc_id and subnet_ids directly from remote state files from backend s3 bucket.
 resource "aws_xx_xxxx" "main" {
   # ...
   subnet_ids = split(",", data.terraform_remote_state.vpc.outputs.data_subnets)
@@ -158,7 +167,7 @@ resource "aws_xx_xxxx" "main" {
 }
 ```
 
-## Turn on debug when you need to do troubleshooting
+## When troubleshooting, remember to enable debugging
 
 ```bash
 TF_LOG=DEBUG terraform <command>
@@ -167,42 +176,36 @@ TF_LOG=DEBUG terraform <command>
 TF_LOG=DEBUG terragrunt <command>
 ```
 
-## Use shared modules
+## re-use terraform modules to save your coding time
 
-Manage terraform resource with shared modules, this will save a lot of coding time. No need to re-invent the wheel!
+Compare to AWS Cloudformation template (CFN), managing Terraform resources with shared modules is one of the best features in Terraform. This approach saves a significant amount of coding time, eliminating the need to reinvent the wheel!
 
 You can start from below links:
 
 - [Terraform module usage](https://www.terraform.io/docs/modules/usage.html)
-
 - [Terraform Module Registry](https://registry.terraform.io/)
-
 - [Terraform aws modules](https://github.com/terraform-aws-modules)
 
-> Up to Terraform 0.12, Terraform modules didn't support `count` parameter.
->
-> From Terraform 0.13 on this feature is already available for your pleasure!
+## Environment Isolation
 
-## Isolate environment
-
-Sometimes, developers like to create a security group and share it to all non-prod (dev/qa) environments. Don't do that, create resources with different name for each environment and each resource.
+At times, developers may consider creating a security group and sharing it across all non-production (dev/staging/qa) environments. However, it's advisable not to do so. Instead, create distinct resources with unique names for each environment and for each resource
 
 ```terraform
 variable "application" {
   description = "application name"
-  default = "<replace_with_your_project_or_application_name, use short name if possible, because some resources have length limit on its name>"
+  default = "<Replace with your project or application name, preferably using a short name of 3 to 4 letters. This is important because certain resources have name length restrictions>"
 }
 
 variable "environment" {
   description = "environment name"
-  default = "<replace_with_environment_name, such as dev, svt, prod,etc. Use short name if possible, because some resources have length limit on its name>"
+  default = "<replace with environment name, such as dev, stag, qa, svt, prod,etc. Use short name if possible, because certain resources have name length restrictions>"
 }
 
 locals {
   name_prefix    = "${var.application}-${var.environment}"
 }
 
-resource "<any_resource>" "custom_resource_name" {
+resource "<any_resource>" "this" {
   name = "${local.name_prefix}-<resource_name>"
   # ...
 }
