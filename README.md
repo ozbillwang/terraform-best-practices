@@ -90,8 +90,8 @@ region  = "ap-southeast-2"
 
 ### Notes on S3
 
-- `bucket` - s3 bucket name, has to be globally unique.
-- `key` - Set some meaningful names for different services and applications, such as vpc.tfstate, application_name.tfstate, etc
+- `bucket` - existing s3 bucket name. Tips: The s3 bucket has to be globally unique, normally I put account id in its name.
+- `key` - Set some meaningful names for different services and applications, such as vpc.tfstate, <application_name>.tfstate, etc
 - `dynamodb_table` - optional when you want to enable [State Locking](https://www.terraform.io/docs/state/locking.html)
 
 After you set `config/backend-dev.conf` and `config/dev.tfvars` properly (for each environment). You can easily run terraform as below:
