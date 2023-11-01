@@ -23,7 +23,6 @@ Terraform Best Practices for AWS users.
   - [Terraform version manager](#terraform-version-manager)
   - [Run terraform in docker container](#run-terraform-in-docker-container)
   - [Run test](#run-test)
-    - [Quick start](#quick-start)
   - [Minimum AWS permissions necessary for a Terraform run](#minimum-aws-permissions-necessary-for-a-terraform-run)
   - [Usage of variable "self"](#usage-of-variable-self)
     - [One more use case](#one-more-use-case)
@@ -349,10 +348,6 @@ Run test within docker container, you can take reference: [README for terraform 
 Way 2: [terratest](https://terratest.gruntwork.io/)
 
 Way 3: [terraform test](https://developer.hashicorp.com/terraform/language/tests) This testing framework is available in Terraform **v1.6.0** and later.
-
-### Quick start
-
-Reference: repo [terraform-aws-modules/terraform-aws-eks](https://github.com/terraform-aws-modules/terraform-aws-eks#testing)
 
 ## Minimum AWS permissions necessary for a Terraform run
 
