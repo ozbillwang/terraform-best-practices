@@ -291,6 +291,20 @@ There is a simple sample for you to start [tf_aws_acme](https://github.com/BWITS
 
 It's advisable to stay updated with the latest Terraform versions.
 
+## Efficient Workspace Management with workspace sub-command
+The `terraform workspace select -or-create` command simplifies workspace management by either selecting an existing workspace or creating a new one if it doesn’t exist. Use it like this:
+
+```
+terraform workspace select -or-create <workspace-name>
+```
+This ensures you're always working in the correct workspace. After running the command, verify your active workspace with:
+
+```
+terraform workspace show
+```
+
+This command helps keep your Terraform environment organized and prevents accidental changes in the wrong environment.
+
 ## Terraform version manager
 
 You can manage multiple terraform versions with [tfenv](https://github.com/tfutils/tfenv)
