@@ -20,6 +20,7 @@ Terraform Best Practices for AWS users.
   - [Validate and format terraform code](#validate-and-format-terraform-code)
   - [Generate README for each module with input and output variables](#generate-readme-for-each-module-with-input-and-output-variables)
   - [Update terraform version](#update-terraform-version)
+  - [Efficient Workspace Management with workspace sub-command](#efficient-workspace-management-with-workspace-sub-command)
   - [Terraform version manager](#terraform-version-manager)
   - [Run terraform in docker container](#run-terraform-in-docker-container)
   - [Run test](#run-test)
